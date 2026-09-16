@@ -53,8 +53,9 @@ VS Code can use `.vscode/mcp.json`. The repository also includes root
 supported clients.
 
 The server is listed in the official MCP Registry as
-`io.github.thunderphone/thunderphone` (`server.json` in this repo; the `publish-mcp-registry.yml`
-workflow republishes it when that file changes).
+`io.github.thunderphone/thunderphone` (`server.json` in this repo). After changing that file,
+an org owner republishes it with `mcp-publisher login github && mcp-publisher publish` from
+this directory.
 
 ## Skills
 
