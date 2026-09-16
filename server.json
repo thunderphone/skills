@@ -1,0 +1,22 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.thunderphone/thunderphone",
+  "title": "ThunderPhone",
+  "description": "Build, test, deploy and run AI phone agents: agents, numbers, calls, tests, knowledge, campaigns.",
+  "version": "1.0.0",
+  "websiteUrl": "https://thunderphone.com/developers",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.thunderphone.com/v1/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer <organization API key from app.thunderphone.com Settings > API keys>, e.g. 'Bearer sk_live_...'",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}

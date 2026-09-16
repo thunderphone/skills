@@ -52,6 +52,10 @@ VS Code can use `.vscode/mcp.json`. The repository also includes root
 [`thunderphone-mcp-setup`](./thunderphone-mcp-setup/SKILL.md) skill for all
 supported clients.
 
+The server is listed in the official MCP Registry as
+`io.github.thunderphone/thunderphone` (`server.json` in this repo; the `publish-mcp-registry.yml`
+workflow republishes it when that file changes).
+
 ## Skills
 
 - `setup-api-key` — create, store, verify, and troubleshoot an organization API key.
