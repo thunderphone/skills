@@ -20,6 +20,7 @@ metadata:
 | VS Code | `.vscode/mcp.json` with `servers` |
 | Claude Desktop | add a remote custom connector in **Settings → Connectors**; use the URL and authorization header below |
 | Gemini CLI | `.gemini/settings.json` with `mcpServers` and an HTTP URL/header |
+| Windsurf | user `~/.codeium/windsurf/mcp_config.json` with `mcpServers`, `serverUrl`, and `${env:THUNDERPHONE_API_KEY}` headers |
 
    Do not write several configs unless the project intentionally supports
    several clients. Preserve unrelated servers in an existing file.
@@ -99,6 +100,32 @@ if (!r.ok) throw new Error(await r.text()); console.log(await r.text());
    agent-assisted workflows across resources. Prefer REST for deterministic CI,
    explicit payload/version control, bulk orchestration, or an operation not yet
    exposed as an MCP tool. The same safety and authorization rules apply.
+
+## CLI setup and stdio alternative
+
+These options complement the direct HTTP configurations above. Node 18.18+ is required.
+
+```bash
+npx -y @thunderphone/mcp setup --client cursor --api-key-env THUNDERPHONE_API_KEY
+npx thunderphone mcp setup --client codex --scope user --api-key-env THUNDERPHONE_API_KEY
+npx -y @thunderphone/mcp setup --client claude-desktop --scope user
+```
+
+After installing `@thunderphone/mcp` globally, the equivalent command is
+`thunderphone-mcp setup`. Supported clients are `claude-code`, `codex`, `cursor`,
+`vscode`, `gemini`, `claude-desktop`, and `windsurf`. Setup preserves unrelated
+servers and prints the file written. It detects a single project client when
+`--client` is omitted; non-interactive ambiguous detection requires that flag.
+Desktop and Windsurf require `--scope user`. Desktop uses the stdio wrapper;
+other clients use direct HTTP; supply `--api-key-env` for an API-key variable reference
+or omit it for client-managed OAuth. Never pass the key value as an argument.
+
+A stdio client can launch `npx -y @thunderphone/mcp` directly. Authentication is
+`THUNDERPHONE_API_KEY`, then the selected CLI credential profile (automatically
+refreshed), then OAuth delegated to `mcp-remote`. Set `THUNDERPHONE_PROFILE` or
+run `thunderphone login --profile NAME` to use another profile. Direct HTTP
+configs do not read the CLI credential store. OAuth paths require
+API OAuth support; API-key authentication works independently.
 
 ## Errors
 
