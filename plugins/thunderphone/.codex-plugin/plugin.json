@@ -1,0 +1,41 @@
+{
+  "name": "thunderphone",
+  "version": "1.0.0",
+  "description": "Build, connect, test, and migrate ThunderPhone voice agents with REST and MCP.",
+  "author": {
+    "name": "ThunderPhone",
+    "email": "support@thunderphone.com",
+    "url": "https://thunderphone.com"
+  },
+  "homepage": "https://thunderphone.com/docs",
+  "repository": "https://github.com/thunderphone/skills",
+  "license": "MIT",
+  "keywords": ["thunderphone", "voice-ai", "agents", "telephony"],
+  "skills": "./skills/",
+  "mcpServers": {
+    "thunderphone": {
+      "type": "http",
+      "url": "https://api.thunderphone.com/v1/mcp",
+      "headers": {
+        "Authorization": "Bearer ${THUNDERPHONE_API_KEY}"
+      }
+    }
+  },
+  "interface": {
+    "displayName": "ThunderPhone",
+    "shortDescription": "Build and test ThunderPhone voice agents.",
+    "longDescription": "Create, connect, test, migrate, and operate ThunderPhone voice agents through grounded REST workflows and the ThunderPhone MCP server.",
+    "developerName": "ThunderPhone",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Write"],
+    "websiteURL": "https://thunderphone.com",
+    "privacyPolicyURL": "https://thunderphone.com/privacy",
+    "termsOfServiceURL": "https://thunderphone.com/terms",
+    "defaultPrompt": [
+      "Create a ThunderPhone voice agent configuration.",
+      "Design and run a ThunderPhone agent test loop.",
+      "Plan a migration to ThunderPhone."
+    ],
+    "brandColor": "#D9FF43"
+  }
+}

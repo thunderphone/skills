@@ -1,0 +1,20 @@
+{
+  "name": "thunderphone-skills",
+  "interface": {
+    "displayName": "ThunderPhone Skills"
+  },
+  "plugins": [
+    {
+      "name": "thunderphone",
+      "source": {
+        "source": "local",
+        "path": "./plugins/thunderphone"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

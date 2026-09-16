@@ -1,0 +1,11 @@
+{
+  "servers": {
+    "thunderphone": {
+      "type": "http",
+      "url": "https://api.thunderphone.com/v1/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:THUNDERPHONE_API_KEY}"
+      }
+    }
+  }
+}

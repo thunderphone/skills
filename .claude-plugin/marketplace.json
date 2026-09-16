@@ -1,0 +1,43 @@
+{
+  "name": "thunderphone-skills",
+  "owner": {
+    "name": "ThunderPhone",
+    "email": "support@thunderphone.com"
+  },
+  "metadata": {
+    "description": "Skills for building and operating ThunderPhone voice agents",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "thunderphone",
+      "version": "1.0.0",
+      "description": "Build, connect, test, and migrate ThunderPhone voice agents.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./setup-api-key",
+        "./create-agent",
+        "./thunderphone-prompt-builder",
+        "./get-phone-number",
+        "./handle-inbound-calls",
+        "./place-outbound-calls",
+        "./build-tool-integration",
+        "./setup-webhooks",
+        "./add-knowledge",
+        "./test-agent",
+        "./run-campaign",
+        "./embed-web-widget",
+        "./use-with-pipecat",
+        "./use-with-livekit",
+        "./use-with-openai-realtime",
+        "./migrate-from-vapi",
+        "./migrate-from-retell",
+        "./migrate-from-bland",
+        "./migrate-from-elevenlabs",
+        "./thunderphone-mcp-setup"
+      ],
+      "mcpServers": "./.mcp.json"
+    }
+  ]
+}
