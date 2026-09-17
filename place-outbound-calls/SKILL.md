@@ -29,7 +29,7 @@ metadata:
 {
   "from_number": "${FROM_NUMBER}",
   "to_number": "${TO_NUMBER}",
-  "agent_id": "${AGENT_ID}",
+  "agent_id": 12,
   "variables": {},
   "max_hold_seconds": 120,
   "idempotency_key": "${IDEMPOTENCY_KEY}"
@@ -41,14 +41,14 @@ curl --fail-with-body -X POST https://api.thunderphone.com/v1/call \
   -H "Authorization: Bearer $THUNDERPHONE_API_KEY" \
   -H "Content-Type: application/json" \
   -H "X-ThunderPhone-Client: skills/place-outbound-calls@1.0" \
-  --data "$(jq -n --arg from "$FROM_NUMBER" --arg to "$TO_NUMBER" --arg agent "$AGENT_ID" --arg key "$IDEMPOTENCY_KEY" '{from_number:$from,to_number:$to,agent_id:$agent,idempotency_key:$key}')"
+  --data "$(jq -n --arg from "$FROM_NUMBER" --arg to "$TO_NUMBER" --argjson agent "$AGENT_ID" --arg key "$IDEMPOTENCY_KEY" '{from_number:$from,to_number:$to,agent_id:$agent,idempotency_key:$key}')"
 ```
 
 ```python
 import os, requests
 
 payload = {"from_number": os.environ["FROM_NUMBER"], "to_number": os.environ["TO_NUMBER"],
-           "agent_id": os.environ["AGENT_ID"], "idempotency_key": os.environ["IDEMPOTENCY_KEY"]}
+           "agent_id": int(os.environ["AGENT_ID"]), "idempotency_key": os.environ["IDEMPOTENCY_KEY"]}
 r = requests.post("https://api.thunderphone.com/v1/call", json=payload,
     headers={"Authorization": f"Bearer {os.environ['THUNDERPHONE_API_KEY']}",
              "X-ThunderPhone-Client": "skills/place-outbound-calls@1.0"}, timeout=30)
@@ -63,7 +63,7 @@ const response = await fetch("https://api.thunderphone.com/v1/call", {
     "Content-Type": "application/json",
     "X-ThunderPhone-Client": "skills/place-outbound-calls@1.0" },
   body: JSON.stringify({ from_number: process.env.FROM_NUMBER, to_number: process.env.TO_NUMBER,
-    agent_id: process.env.AGENT_ID, idempotency_key: process.env.IDEMPOTENCY_KEY }),
+    agent_id: Number(process.env.AGENT_ID), idempotency_key: process.env.IDEMPOTENCY_KEY }),
 });
 if (!response.ok) throw new Error(await response.text());
 console.log(await response.json());

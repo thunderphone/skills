@@ -19,7 +19,7 @@ metadata:
 
 ```json request PATCH /v1/phone-numbers/{phone_number_id}
 {
-  "inbound_agent_id": "${AGENT_ID}"
+  "inbound_agent_id": 12
 }
 ```
 
@@ -28,14 +28,14 @@ curl --fail-with-body -X PATCH "https://api.thunderphone.com/v1/phone-numbers/$P
   -H "Authorization: Bearer $THUNDERPHONE_API_KEY" \
   -H "Content-Type: application/json" \
   -H "X-ThunderPhone-Client: skills/handle-inbound-calls@1.0" \
-  --data "$(jq -n --arg id "$AGENT_ID" '{inbound_agent_id:$id}')"
+  --data "$(jq -n --argjson id "$AGENT_ID" '{inbound_agent_id:$id}')"
 ```
 
 ```python
 import os, requests
 
 url = f"https://api.thunderphone.com/v1/phone-numbers/{os.environ['PHONE_NUMBER_ID']}"
-r = requests.patch(url, json={"inbound_agent_id": os.environ["AGENT_ID"]},
+r = requests.patch(url, json={"inbound_agent_id": int(os.environ["AGENT_ID"])},
     headers={"Authorization": f"Bearer {os.environ['THUNDERPHONE_API_KEY']}",
              "X-ThunderPhone-Client": "skills/handle-inbound-calls@1.0"}, timeout=30)
 r.raise_for_status()
@@ -48,7 +48,7 @@ const response = await fetch(`https://api.thunderphone.com/v1/phone-numbers/${pr
   headers: { Authorization: `Bearer ${process.env.THUNDERPHONE_API_KEY}`,
     "Content-Type": "application/json",
     "X-ThunderPhone-Client": "skills/handle-inbound-calls@1.0" },
-  body: JSON.stringify({ inbound_agent_id: process.env.AGENT_ID }),
+  body: JSON.stringify({ inbound_agent_id: Number(process.env.AGENT_ID) }),
 });
 if (!response.ok) throw new Error(await response.text());
 console.log(await response.json());

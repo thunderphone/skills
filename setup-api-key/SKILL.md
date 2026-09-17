@@ -11,8 +11,8 @@ metadata:
 # Set up a ThunderPhone API key
 
 1. **Choose the creation path.** In the dashboard, open **Organization → Keys**.
-   To automate key creation, use `POST /v1/developer/api-keys` with an existing
-   organization-admin key. A key cannot bootstrap its own first credential.
+   To automate key creation, use `POST /v1/developer/api-keys` with an authenticated
+   human admin session. Organization API keys cannot manage API keys.
 
 ```json request POST /v1/developer/api-keys
 {
@@ -24,6 +24,9 @@ metadata:
    into source, chat, shell history, screenshots, logs, or a committed `.env`.
 3. **Send both standard headers.** Every request made from this pack identifies
    its source with `X-ThunderPhone-Client: skills/setup-api-key@1.0`.
+The [Python and TypeScript SDKs](https://thunderphone.com/docs/api-reference/sdks.md)
+read `THUNDERPHONE_API_KEY` and send the authentication header automatically.
+
 4. **Verify the credential** with a read-only agents request.
 
 ```bash
@@ -72,7 +75,7 @@ header but never the bearer value.
 | Symptom | Cause | Fix |
 |---|---|---|
 | `401` | Missing, malformed, revoked, or wrong-environment key | Read the value from the intended secret store and retain the `Bearer ` prefix. |
-| `403` | Valid key lacks the required organization role or an account gate applies | Use an organization-admin key for key management; inspect the response for the named gate. |
+| `403` | Valid key lacks the required organization role or an account gate applies | Use a human admin session for key management; inspect the response for the named gate. |
 | HTML or DNS error | Wrong host | Use `https://api.thunderphone.com`, not the dashboard host. |
 | Key appears in output | Unsafe debugging | Stop, redact the output, rotate the exposed key, and remove it from persisted history. |
 

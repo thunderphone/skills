@@ -23,7 +23,7 @@ metadata:
 {
   "source": "vapi",
   "auth_mode": "paste",
-  "payload": {}
+  "payload": "${EXPORTED_AGENT_JSON}"
 }
 ```
 

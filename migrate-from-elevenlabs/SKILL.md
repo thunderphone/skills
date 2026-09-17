@@ -23,7 +23,7 @@ metadata:
 {
   "source": "elevenlabs",
   "auth_mode": "paste",
-  "payload": {}
+  "payload": "${EXPORTED_AGENT_JSON}"
 }
 ```
 

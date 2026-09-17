@@ -22,7 +22,7 @@ metadata:
 {
   "source": "bland",
   "auth_mode": "paste",
-  "payload": {}
+  "payload": "${EXPORTED_AGENT_JSON}"
 }
 ```
 
