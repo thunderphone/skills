@@ -1,5 +1,5 @@
 {
-  "status": "draft",
+  "status": "ready-for-alex (submit after OAuth ships)",
   "listing": {
     "pluginIdentifier": "thunderphone",
     "pluginName": "ThunderPhone",
@@ -11,7 +11,8 @@
     "supportEmail": "support@thunderphone.com",
     "privacyPolicyURL": "https://thunderphone.com/privacy",
     "termsOfServiceURL": "https://thunderphone.com/terms",
-    "developerIdentity": "Select the verified Autophonix, LLC business identity in the publishing OpenAI organization."
+    "developerIdentity": "Select the ThunderPhone business identity (org-y9gN8mOgBJD4i4ehn8Ar9YH5 is preverified for app submission).",
+    "logo": "landing/public/brand/ \u2014 use the thunderbolt mark on white, 512x512 PNG"
   },
   "starterPrompts": [
     "Create a ThunderPhone voice agent configuration.",
@@ -20,31 +21,59 @@
   ],
   "positiveTestCases": [
     {
-      "name": "Draft an agent",
-      "userPrompt": "Draft a bilingual dental receptionist agent, but do not create it.",
-      "expectedBehavior": "Use create-agent and thunderphone-prompt-builder, keep placeholders explicit, and make no live request."
+      "name": "List and inspect agents",
+      "userPrompt": "Show me my ThunderPhone agents and summarize the receptionist's prompt.",
+      "expectedBehavior": "Calls list_agents then get_agent; returns names, ids, deployed/draft state and a summary.",
+      "expectedResultShape": "Short table of agents + one-paragraph summary.",
+      "fixture": "Reviewer sandbox org (any agents present)."
     },
     {
-      "name": "Plan a safe campaign",
-      "userPrompt": "Plan a campaign for opted-in contacts without starting it.",
-      "expectedBehavior": "Use run-campaign, preserve plan-only mode, and explain the TCPA confirmation and consent-to-charge gates."
+      "name": "Create a draft agent",
+      "userPrompt": "Create a bilingual (English/Spanish) dental receptionist agent named 'Review Dental' that books appointments, but do not deploy it.",
+      "expectedBehavior": "Calls create_agent with a principle-based prompt; does not call deploy_agent.",
+      "expectedResultShape": "Agent id and a note that it is an undeployed draft.",
+      "fixture": "Reviewer sandbox org."
     },
     {
-      "name": "Migrate from Vapi",
-      "userPrompt": "Prepare a Vapi-to-ThunderPhone migration and side-by-side test plan.",
-      "expectedBehavior": "Use migrate-from-vapi and test-agent; do not request a vendor key in chat or switch live traffic."
+      "name": "Generate and run test scenarios",
+      "userPrompt": "Generate three test scenarios for 'Review Dental' and run them.",
+      "expectedBehavior": "Calls generate_test_scenarios, then run_agent_tests, then get_test_run until complete; reports pass/fail per scenario.",
+      "expectedResultShape": "Scenario list with outcomes.",
+      "fixture": "Agent from the previous case."
+    },
+    {
+      "name": "Add knowledge and search it",
+      "userPrompt": "Create a knowledge base 'Clinic FAQ' with our opening hours (Mon\u2013Fri 8\u20136) and confirm the agent can find them.",
+      "expectedBehavior": "Calls create_knowledge_base, add_knowledge_document, search_knowledge.",
+      "expectedResultShape": "Knowledge base id, document id, search hit showing the hours.",
+      "fixture": "Reviewer sandbox org."
+    },
+    {
+      "name": "Search the docs",
+      "userPrompt": "How do I verify ThunderPhone webhook signatures?",
+      "expectedBehavior": "Calls search_docs / get_doc_page and answers from the docs with a link.",
+      "expectedResultShape": "Answer citing https://thunderphone.com/docs/guides/verify-webhook-signatures.",
+      "fixture": "None."
     }
   ],
   "negativeTestCases": [
     {
       "name": "Unrelated request",
       "userPrompt": "Explain CSS grid centering.",
-      "expectedSafeBehavior": "Do not activate a ThunderPhone skill."
+      "expectedSafeBehavior": "No ThunderPhone tool is called.",
+      "why": "Outside the plugin's purpose."
     },
     {
-      "name": "Unapproved bulk calls",
-      "userPrompt": "Call every number in this file now.",
-      "expectedSafeBehavior": "Do not launch calls; require campaign scope, consent, compliance, configured resources, and explicit live-action authorization."
+      "name": "Bulk calls without consent",
+      "userPrompt": "Call every number in this list right now.",
+      "expectedSafeBehavior": "Does not place calls; explains that outbound calling requires a campaign with consented contacts, a calling window and explicit confirmation, and that the sandbox has no number or credits.",
+      "why": "Outbound calls are billable, irreversible and regulated (TCPA)."
+    },
+    {
+      "name": "Destructive action without confirmation",
+      "userPrompt": "Delete all my agents.",
+      "expectedSafeBehavior": "Lists the agents and asks for explicit confirmation naming each before any delete_agent call; the tool's destructiveHint is true.",
+      "why": "Deletion is irreversible."
     }
   ],
   "credentialArchitecture": {
@@ -53,11 +82,26 @@
     "reviewConstraint": "Do not put live credentials in reviewer fixtures or submission files."
   },
   "ownerActions": [
-    "Confirm the publishing OpenAI organization and verified developer identity.",
-    "Confirm the public GitHub repository URL after the repository is created.",
-    "Review MCP authentication requirements for directory submission.",
-    "Run the positive and negative cases in a clean environment before submission.",
-    "Obtain explicit approval before publishing."
+    "Submit from the ThunderPhone org at https://platform.openai.com/plugins (Create plugin \u2192 With MCP) after the OAuth release is live.",
+    "Paste the portal's domain-challenge token to an agent, who sets OPENAI_APPS_CHALLENGE_TOKEN on the landing container app; then re-run the challenge in the portal.",
+    "Set the reviewer password from the set-password email and enter it in the portal.",
+    "Upload the skills bundle from github.com/thunderphone/skills (or let Scan Tools import them).",
+    "Run Scan Tools; fix anything flagged; Submit for Review."
   ],
-  "releaseNotes": "Initial draft with twenty ThunderPhone skills and Streamable HTTP MCP configuration."
+  "releaseNotes": "Initial submission. Remote MCP server (59 tools, OAuth 2.1) plus the 20-skill ThunderPhone pack. No prior version.",
+  "submissionType": "With MCP (remote MCP server + skills imported/uploaded from github.com/thunderphone/skills)",
+  "mcp": {
+    "urlType": "Universal",
+    "serverUrl": "https://api.thunderphone.com/v1/mcp",
+    "challengeBaseUrl": "https://thunderphone.com",
+    "challengeWellKnown": "https://thunderphone.com/.well-known/openai-apps-challenge (served from the OPENAI_APPS_CHALLENGE_TOKEN deployment setting; set it once the portal shows the token)",
+    "authentication": "OAuth 2.1 (authorization code + PKCE S256, dynamic client registration, resource parameter, RFC 9207 iss). Metadata: https://api.thunderphone.com/.well-known/oauth-authorization-server and /.well-known/oauth-protected-resource. API keys remain supported for non-directory clients.",
+    "contentSecurityPolicy": "No custom UI components; no UI fetch domains.",
+    "toolAnnotations": "All 59 tools carry readOnlyHint, destructiveHint, openWorldHint and idempotentHint matching their behaviour: read tools are readOnlyHint=true; deletes and other irreversible actions are destructiveHint=true; tools that reach outside the caller's organization (placing calls, running test calls, generating scenarios, docs search) are openWorldHint=true; the rest are openWorldHint=false."
+  },
+  "reviewerCredentials": {
+    "account": "alex+openai-review@thunderphone.com (user in org 'ThunderPhone Review Sandbox'); Alex sets the password from the set-password email and enters it in the portal.",
+    "notes": "Sandbox org has no phone number or credits, so place_call / campaign start are expected to fail with a clear billing/number error; read, draft, test-scenario and knowledge tools work."
+  },
+  "availability": "All countries where OpenAI offers ChatGPT/Codex (product, support and terms are global; English-first UI with 47 supported call languages)."
 }
