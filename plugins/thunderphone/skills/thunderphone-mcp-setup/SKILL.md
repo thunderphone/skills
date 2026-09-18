@@ -10,6 +10,8 @@ metadata:
 
 # Configure the ThunderPhone MCP server
 
+Use OAuth by default for directory clients (https://thunderphone.com/docs/guides/oauth); the API-key configuration below remains an alternative.
+
 1. **Detect the client.** Check the current tool's documented project config:
 
 | Client | Project configuration |
