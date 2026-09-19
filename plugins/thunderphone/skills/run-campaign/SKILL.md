@@ -1,6 +1,6 @@
 ---
 name: run-campaign
-description: Create, load, start, pause, cancel, monitor, or troubleshoot a ThunderPhone outbound campaign. Use when someone asks about campaign CRUD, contact CSV or JSON imports, calling windows, consent_to_charge, campaign actions, stats, compliance controls, or high-volume outbound calling.
+description: Run a consent-based ThunderPhone outbound campaign to people who agreed to be called (appointment reminders, callbacks, follow-ups) - create it, load contacts, start, pause, stop, monitor, or troubleshoot. Use when someone asks about campaign setup, contact CSV or JSON imports, calling windows, consent and compliance controls, consent_to_charge, campaign actions, or stats.
 license: MIT
 compatibility: Requires THUNDERPHONE_API_KEY, an outbound-capable number, a deployed agent, balance, and required calling attestations.
 metadata:
@@ -63,7 +63,8 @@ console.log(await response.json());
 ```
 
 4. **Load contacts.** Use `POST /v1/campaigns/{campaign_id}/contacts` with CSV or
-   JSON. The documented import limit is 5,000 contacts per request. Normalize
+   JSON. Imports are capped per request; split larger lists (the API reference
+   gives the current limit). Every contact must have agreed to be called. Normalize
    E.164 numbers, time zones, required variables, and suppression state before
    upload. Deduplicate outside the campaign too.
 5. **Review the dry state.** Read `GET /v1/campaigns/{campaign_id}` and sample
