@@ -108,5 +108,18 @@
     "url": "https://cdn.thunderphone.com/review/fh0-33_YT8YPJXkRwTSr3bP3/thunderphone-chatgpt-demo.mp4",
     "recorded": "2026-09-18",
     "notes": "ChatGPT Developer Mode against the reviewer sandbox (org 172), all 5 positive and 3 negative cases, recorded after thunderphone#2139 reached production. Origin: $web/review/ on stthunderphoneprod (unlisted path; do not delete while the submission is in review)."
+  },
+  "claudeDirectory": {
+    "status": "submitted 2026-09-19, in review",
+    "submittedFrom": "Claude Team org 'ThunderPhone' (owner alex@autophonix.com)",
+    "company": "Autophonix, LLC d/b/a ThunderPhone",
+    "slug": "thunderphone",
+    "categories": [
+      "Communication",
+      "Development tools"
+    ],
+    "auth": "OAuth 2.0 + Dynamic Client Registration",
+    "docsURL": "https://thunderphone.com/docs/guides/thunderphone-mcp-server",
+    "reviewerAccount": "alex+claude-review@thunderphone.com (org 'ThunderPhone Review Sandbox (Claude)'); password lives only in the submission form"
   }
 }
