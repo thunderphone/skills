@@ -3,7 +3,7 @@
   "name": "io.github.thunderphone/thunderphone",
   "title": "ThunderPhone",
   "description": "Build, test, deploy and run AI phone agents: agents, numbers, calls, tests, knowledge, campaigns.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "websiteUrl": "https://thunderphone.com/developers",
   "remotes": [
     {
@@ -14,6 +14,25 @@
           "name": "Authorization",
           "description": "Bearer <organization API key from app.thunderphone.com Settings > API keys>, e.g. 'Bearer sk_live_...'",
           "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@thunderphone/mcp",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "THUNDERPHONE_API_KEY",
+          "description": "Organization API key from app.thunderphone.com Settings > API keys. Optional when you have signed in with `thunderphone login`.",
+          "isRequired": false,
           "isSecret": true
         }
       ]
