@@ -1,5 +1,5 @@
 {
-  "status": "v1 rejected 2026-10-01 (sensitive data); resubmission materials below, MCP only",
+  "status": "v1 rejected 2026-10-01 (sensitive data). v1.0.1 package (agent-skills/plugins/thunderphone-directory) uploaded to the portal 2026-10-02 with no metadata issues; MCP connect pending (portal shows no Connect control).",
   "listing": {
     "pluginIdentifier": "thunderphone",
     "pluginName": "ThunderPhone",
@@ -12,7 +12,7 @@
     "privacyPolicyURL": "https://thunderphone.com/privacy",
     "termsOfServiceURL": "https://thunderphone.com/terms",
     "developerIdentity": "Select the ThunderPhone business identity (org-y9gN8mOgBJD4i4ehn8Ar9YH5 is preverified for app submission).",
-    "logo": "landing/public/brand/ \u2014 use the thunderbolt mark on white, 512x512 PNG"
+    "logo": "landing/public/brand/ — use the thunderbolt mark on white, 512x512 PNG"
   },
   "starterPrompts": [
     "Show me my ThunderPhone voice agents.",
@@ -43,7 +43,7 @@
     },
     {
       "name": "Add knowledge and search it",
-      "userPrompt": "Create a knowledge base 'Service FAQ' with our opening hours (Mon\u2013Fri 8\u20136) and confirm the agent can find them.",
+      "userPrompt": "Create a knowledge base 'Service FAQ' with our opening hours (Mon–Fri 8–6) and confirm the agent can find them.",
       "expectedBehavior": "Calls create_knowledge_base and add_knowledge_document (or reuses an existing 'Service FAQ'), then search_knowledge.",
       "expectedResultShape": "Knowledge base id, document id, search hit showing the hours.",
       "fixture": "Reviewer sandbox org."
@@ -110,9 +110,9 @@
   },
   "availability": "All countries where OpenAI offers ChatGPT/Codex (product, support and terms are global; English-first UI with 47 supported call languages).",
   "demoRecording": {
-    "url": "https://cdn.thunderphone.com/review/fh0-33_YT8YPJXkRwTSr3bP3/thunderphone-chatgpt-demo.mp4",
-    "recorded": "2026-09-18",
-    "notes": "ChatGPT Developer Mode against the reviewer sandbox (org 172), all 5 positive and 3 negative cases, recorded after thunderphone#2139 reached production. Origin: $web/review/ on stthunderphoneprod (unlisted path; do not delete while the submission is in review). SUPERSEDED: re-record for the resubmission (dental test cases removed)."
+    "url": "https://cdn.thunderphone.com/review/1bDM1eq8EaqSNMd2h20BNvkp/thunderphone-chatgpt-demo-v101.mp4",
+    "recorded": "2026-10-02",
+    "notes": "ChatGPT Developer Mode against the reviewer sandbox (org 172) after #2902 reached production: 5 positive and 4 negative cases (the portal takes 3; bulk calls is the extra). Origin: $web/review/ on stthunderphoneprod (unlisted path; keep while in review). The 2026-09-18 video stays at its old path."
   },
   "claudeDirectory": {
     "status": "submitted 2026-09-19, in review",
