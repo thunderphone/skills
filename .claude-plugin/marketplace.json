@@ -26,6 +26,7 @@
         "./setup-webhooks",
         "./add-knowledge",
         "./test-agent",
+        "./iterate-on-agent",
         "./run-campaign",
         "./embed-web-widget",
         "./use-with-pipecat",

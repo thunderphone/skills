@@ -73,6 +73,10 @@ console.log(await response.json());
 7. **Rerun the same scenarios**, then add a regression case. Compare the exact
    agent revision and configuration used by both runs.
 
+For an agent that already takes calls, the `iterate-on-agent` skill turns
+its real calls into dev and test sets and replays them against each prompt
+edit.
+
 ## What a good pass looks like
 
 - Every required criterion passes on the intended deployed revision.
