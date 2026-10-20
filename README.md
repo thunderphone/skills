@@ -69,6 +69,7 @@ this directory.
 - `setup-webhooks` — subscribe to events and verify signed webhook deliveries.
 - `add-knowledge` — import documents and URLs, search them, and attach knowledge to agents.
 - `test-agent` — generate scenarios, run simulations, inspect evidence, and iterate.
+- `iterate-on-agent` — review and edit a prompt, replay real and simulated conversations on the draft, compare configurations, listen, and deploy with approval.
 - `run-campaign` — create compliant outbound campaigns, load contacts, and monitor stats.
 - `embed-web-widget` — ship the React, headless, or CDN web-call widget.
 - `use-with-pipecat` — use ThunderPhone Realtime as a Pipecat model service.
