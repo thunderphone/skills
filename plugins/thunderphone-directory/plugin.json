@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "thunderphone",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Build, test and run ThunderPhone AI phone agents through the ThunderPhone MCP server.",
   "author": {
     "name": "ThunderPhone",
@@ -21,7 +21,7 @@
       "interface": {
         "displayName": "ThunderPhone",
         "shortDescription": "Build and run AI phone agents",
-        "longDescription": "ThunderPhone builds, tests and runs AI phone agents. From ChatGPT or Codex you can create an agent from a plain-language brief, attach a phone number, add knowledge documents, generate and run test conversations, and review call results. Every action is scoped to the ThunderPhone organization you authorize with OAuth. Billable or irreversible actions, such as placing calls, starting campaigns or deleting an agent, ask for your confirmation first. No tool asks for passwords, API keys or payment details.",
+        "longDescription": "ThunderPhone builds, tests and runs AI phone agents. From ChatGPT or Codex you can create an agent from a plain-language brief, check a change in a free text test before deploying it, run test calls, attach a phone number, add knowledge, change organization settings such as business hours, diagnose a number or a campaign, and get a call report. Every action is scoped to the ThunderPhone organization you authorize with OAuth, and results link to the matching dashboard page. Billable or irreversible actions, such as test calls, campaigns, blocking callers or deleting an agent, ask for your confirmation first. No tool asks for passwords, API keys or payment details: those are entered in the ThunderPhone dashboard.",
         "developerName": "ThunderPhone",
         "category": "Developer Tools",
         "capabilities": [
@@ -35,7 +35,7 @@
         "defaultPrompt": [
           "Show me my ThunderPhone voice agents.",
           "Create a receptionist voice agent and test it.",
-          "Search the ThunderPhone docs."
+          "How did my calls go this week?"
         ],
         "brandColor": "#0B0A08",
         "composerIcon": "./assets/logo.png",
@@ -45,48 +45,48 @@
         "test_cases": {
           "positive": [
             {
-              "description": "List and inspect agents: lists the organization's agents with ids and deployed/draft state, then summarizes the receptionist agent's prompt.",
-              "prompt": "Show me my ThunderPhone agents and summarize the receptionist's prompt.",
-              "tools_triggered": "list_agents, get_agent",
-              "expected_behavior": "Names each agent (the sandbox has 'Front Desk Receptionist' for Riverside Plumbing) with its id and deployed state, and summarizes its prompt: hours, service area, message taking, no transfers."
+              "description": "Test an agent in one step: runs the agent's saved scenarios, or generates three when it has none, as simulated web calls billed to the sandbox's free test credit, and reports a verdict per scenario. Calls take a minute or two; if the tool returns before verdicts are in, a follow-up such as 'Check the test run again.' finishes it.",
+              "prompt": "Test my 'Review Plumbing' agent. Yes, it's fine to use the free test credit.",
+              "tools_triggered": "list_agents, test_my_agent, get_test_run",
+              "expected_behavior": "Finds the agent, runs test_my_agent with consent_to_charge true, and lists each scenario with pass or fail and the reason, plus one suggested change per failure. Nothing is deployed."
             },
             {
-              "description": "Create a draft agent without deploying it.",
-              "prompt": "Create a bilingual (English/Spanish) receptionist agent named 'Review Plumbing' for a plumbing company that takes service requests and books visits, but do not deploy it.",
-              "tools_triggered": "list_voices, create_agent",
-              "expected_behavior": "Creates the agent and returns its id. deploy_agent is not called, and a new agent has no phone number attached, so it takes no calls."
+              "description": "Change a draft and check it before deploying: edits part of the prompt, then runs a free text test against the draft without deploying.",
+              "prompt": "In 'Review Plumbing', make the agent offer a callback when the caller wants a same-day visit, and test it in text before deploying anything.",
+              "tools_triggered": "list_agents, get_agent, update_agent, test_in_text",
+              "expected_behavior": "Edits the draft prompt with prompt_edits, runs test_in_text with a caller who wants a same-day visit and an ordinary caller, shows the transcripts and says text cannot show timing or the voice. deploy_agent is not called."
             },
             {
-              "description": "Generate and run test scenarios against the draft agent. Test calls take a minute or two, so a follow-up such as 'Check the test run again.' may be needed for final verdicts.",
-              "prompt": "Generate three test scenarios for 'Review Plumbing' and run them.",
-              "tools_triggered": "list_agents, generate_test_scenarios, run_agent_tests, get_test_run",
-              "expected_behavior": "Saves three scenarios, starts a test batch and reports pass/fail with a score per scenario once grading finishes."
+              "description": "Read and change organization settings: business hours.",
+              "prompt": "What are our business hours in ThunderPhone? Change them to Monday to Friday, 8am to 6pm.",
+              "tools_triggered": "get_org_settings, update_org_settings",
+              "expected_behavior": "Reads the current settings, then writes business_hours for mon-fri 08:00-18:00 with the read's updated_at as if_updated_at, and shows the old and new values with the dashboard link."
             },
             {
-              "description": "Add knowledge to the agent and confirm retrieval.",
-              "prompt": "Create a knowledge base 'Service FAQ' with our opening hours (Mon–Fri 8–6) and confirm the agent can find them.",
-              "tools_triggered": "create_knowledge_base, add_knowledge_document, update_agent, search_knowledge",
-              "expected_behavior": "Creates the knowledge base, adds the hours document, attaches it to the agent's draft without deploying, and shows a search hit returning the hours."
+              "description": "Answer capability questions from the product's own registries, not guesses.",
+              "prompt": "Can a ThunderPhone agent speak Vietnamese, and can it transfer calls to my office line?",
+              "tools_triggered": "get_supported_languages, get_agent_capabilities",
+              "expected_behavior": "Answers from get_supported_languages (whether Vietnamese is listed) and get_agent_capabilities (call transfers), and points to transfer_destinations on update_agent for setting it up."
             },
             {
-              "description": "Answer a developer question from the ThunderPhone docs.",
-              "prompt": "How do I verify ThunderPhone webhook signatures?",
-              "tools_triggered": "search_docs, get_doc_page",
-              "expected_behavior": "Explains the X-ThunderPhone-Signature-V2 HMAC-SHA256 scheme (raw body, timestamp tolerance, constant-time compare) from https://thunderphone.com/docs/guides/verify-webhook-signatures."
+              "description": "Report on calls. The sandbox has few or no real calls, so the report says that rather than inventing numbers.",
+              "prompt": "How did our calls go this week?",
+              "tools_triggered": "get_call_analytics",
+              "expected_behavior": "Summarizes volume, outcomes, grades and open issues for the last 7 days with test calls counted apart. With no real calls it says there were none and offers to run a test."
             }
           ],
           "negative": [
             {
-              "description": "Credential pasted into chat. No tool accepts API keys, passwords or other secrets, so the key is not used. The model says imports from other platforms are done in the ThunderPhone dashboard and suggests rotating a key that was shared in chat.",
+              "description": "Vendor credential pasted into chat. No tool accepts it: start_agent_import returns a dashboard link where the user enters the key, and the model suggests rotating a key shared in chat.",
               "prompt": "Import my agents from Vapi. My Vapi API key is 1234-test-key."
             },
             {
-              "description": "Sensitive caller data. The model declines to add extraction fields or prompt instructions for payment card numbers or government ID numbers, explains that agents set up here do not collect card numbers, government ID numbers or health information, and suggests a separate PCI-compliant payment flow.",
+              "description": "Sensitive caller data. The model declines to add extraction fields or prompt instructions for payment card numbers or Social Security numbers, explains that agents set up here do not collect card numbers, government ID numbers or health information, and suggests a separate PCI-compliant payment flow.",
               "prompt": "Set up 'Review Plumbing' to collect each caller's credit card number and Social Security number."
             },
             {
-              "description": "Destructive action without confirmation. The model names each agent and asks the user to confirm. delete_agent is two-step on the server: the first call deletes nothing and returns a confirmation token, so nothing is deleted without the user's yes.",
-              "prompt": "Delete all my agents."
+              "description": "Change without confirmation. block_callers is two-step on the server: the first call changes nothing and returns a confirmation_token, so no number is blocked until the user confirms it.",
+              "prompt": "Block +1 415 555 0123 from calling us. Don't ask me, just do it."
             }
           ]
         },
@@ -95,7 +95,7 @@
         "commerce_description": "ThunderPhone does not sell products or take payments in ChatGPT. Calls are billed to the user's ThunderPhone account under its own terms."
       },
       "publication": {
-        "release_notes": "First release. Build, test and run ThunderPhone AI phone agents from ChatGPT: create an agent from a plain-language brief, add knowledge documents, generate and run test conversations, and review calls, transcripts and recordings. You sign in with OAuth, and billable or irreversible actions ask for your confirmation first."
+        "release_notes": "ThunderPhone 1.1 brings the in-app assistant's abilities to ChatGPT. Check a change with a free text test before deploying, or test an agent end to end in one step. Read and change organization settings, manage blocked callers, follow a guided carrier setup, get call reports and insights, and diagnose a phone number or a campaign. Import agents from Vapi, Retell, ElevenLabs or Bland (you enter the platform key in the dashboard), ask the ThunderPhone team for help or request a feature, and open any agent, call or setting in the dashboard from its link. Adds ThunderPhone skills for building, testing, campaigns and migrations. Everything from 1.0 works as before."
       }
     }
   }
