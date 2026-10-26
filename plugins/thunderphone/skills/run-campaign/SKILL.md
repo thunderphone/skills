@@ -16,15 +16,22 @@ metadata:
 2. **Validate the agent and number.** Use a tested deployed agent and an
    outbound-capable `from_number`. Check balance and
    `GET /v1/outbound-tcpa-confirmation` before loading production contacts.
-3. **Create the campaign.** `POST /v1/campaigns` requires a name, agent, source
-   number, and daily start/end window. Keep the campaign paused while loading
-   and reviewing contacts.
+3. **Create the campaign.** `POST /v1/campaigns` requires a name, agent, and a
+   source number (`from_number`) or a pool of them (`from_numbers`), plus a daily
+   start/end window. For more than a few dozen calls a day, use a pool of local
+   numbers: each contact is called from the number it was last called from, else
+   one with its area code, else one in its time zone, else the least used, and
+   `max_calls_per_number_per_day` (default 75) keeps each number under carrier
+   spam thresholds. Contacts wait, never fail, when every number is at its limit;
+   `blocked_reason` says so. Keep the campaign paused while loading and reviewing
+   contacts.
 
 ```json request POST /v1/campaigns
 {
   "name": "May win-back",
   "agent": 12,
-  "from_number": "${FROM_NUMBER}",
+  "from_numbers": ["${FROM_NUMBER}", "${SECOND_FROM_NUMBER}"],
+  "max_calls_per_number_per_day": 75,
   "timezone": "America/Los_Angeles",
   "daily_window_start": "09:00",
   "daily_window_end": "17:00"
@@ -86,6 +93,7 @@ console.log(await response.json());
 | Campaign will not start | Missing attestation, balance, contacts, or charge consent | Read the error, resolve the named gate, and review before retrying. |
 | Contacts are rejected | Invalid number, missing required column, or import too large | Normalize and validate; split imports at the documented limit. |
 | Calls occur at the wrong local time | Window was applied without reliable recipient time zone | Supply verified time-zone data or hold ambiguous contacts. |
+| Running but not dialing, `blocked_reason` set | Every pool number reached its daily limit | Wait, add numbers to the pool while paused, or raise `max_calls_per_number_per_day`. |
 | Failure rate rises | Agent, carrier, number, or contact data is unhealthy | Pause first, inspect samples and telemetry, then fix the cause. |
 
 ## Source and safety rules
