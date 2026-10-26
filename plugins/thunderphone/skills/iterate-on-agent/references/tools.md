@@ -9,7 +9,7 @@ have the agent iteration toolkit.
 | MCP tool | REST | Returns |
 |---|---|---|
 | `get_agent` | `GET /v1/agents/{agent_id}` | The agent: deployed fields, `draft_*` fields (null when unchanged), and `updated_at` for `if_updated_at`. |
-| `list_prompt_revisions` | `GET /v1/agents/{agent_id}/prompt-revisions` | Every change to the prompt text, newest first: `sha256`, `source` (draft, deploy, variant, import, backfill, candidate), `actor`, and a unified `diff`. `GET /v1/agents/{agent_id}/prompt-revisions/{revision_id}` adds the full `text`. |
+| `list_prompt_revisions` | `GET /v1/agents/{agent_id}/prompt-revisions` | Every change to the prompt text, newest first: `sha256`, `source` (draft, deploy, variant, import, backfill, candidate, historical: a prompt past calls ran before the agent held it), `actor`, and a unified `diff`. `GET /v1/agents/{agent_id}/prompt-revisions/{revision_id}` adds the full `text`. |
 | `list_calls`, `get_call`, `get_call_transcript` | `GET /v1/calls`, `GET /v1/calls/{call_id}`, `GET /v1/calls/{call_id}/transcript` | Calls. In toolkit organizations a call whose caller is in one of the agent's test splits is held out: to an API key or OAuth token, on these tools, `get_call_audio_url`, `get_call_grade`, `export_calls` and their REST endpoints alike, it comes back as `call_id`, its start time and `held_out: true` only, and writes on it are refused (403 `held_out_call`). People see it in full in the dashboard; an API key an admin gave `include_held_out_calls` (off by default) does too, never over MCP. Leave held-out calls out when tuning. |
 | resource `thunderphone://guides/prompt-style` | [public page](https://thunderphone.com/docs/guides/prompt-style.md) | The style guide, with the guideline ids review findings cite. |
 
