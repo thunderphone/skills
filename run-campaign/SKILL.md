@@ -23,8 +23,11 @@ metadata:
    one with its area code, else one in its time zone, else the least used, and
    `max_calls_per_number_per_day` (default 75) keeps each number under carrier
    spam thresholds. Contacts wait, never fail, when every number is at its limit;
-   `blocked_reason` says so. Keep the campaign paused while loading and reviewing
-   contacts.
+   `blocked_reason` says so. New campaigns call in each contact's local time
+   (`window_timezone_mode: "contact"`, by area code) and spread retries across
+   days and times of day (`retry_strategy: "spread"`). `double_dial: true` redials
+   once, 30-60 seconds after a ring-out, without using an attempt. Keep the
+   campaign paused while loading and reviewing contacts.
 
 ```json request POST /v1/campaigns
 {
@@ -32,6 +35,9 @@ metadata:
   "agent": 12,
   "from_numbers": ["${FROM_NUMBER}", "${SECOND_FROM_NUMBER}"],
   "max_calls_per_number_per_day": 75,
+  "window_timezone_mode": "contact",
+  "retry_strategy": "spread",
+  "double_dial": true,
   "timezone": "America/Los_Angeles",
   "daily_window_start": "09:00",
   "daily_window_end": "17:00"
@@ -92,7 +98,7 @@ console.log(await response.json());
 |---|---|---|
 | Campaign will not start | Missing attestation, balance, contacts, or charge consent | Read the error, resolve the named gate, and review before retrying. |
 | Contacts are rejected | Invalid number, missing required column, or import too large | Normalize and validate; split imports at the documented limit. |
-| Calls occur at the wrong local time | Window was applied without reliable recipient time zone | Supply verified time-zone data or hold ambiguous contacts. |
+| Calls occur at the wrong local time | The campaign uses `window_timezone_mode: "campaign"`, or contacts lack a US/Canadian area code | Use `"contact"`; split contacts without an area code into a campaign with their timezone. |
 | Running but not dialing, `blocked_reason` set | Every pool number reached its daily limit | Wait, add numbers to the pool while paused, or raise `max_calls_per_number_per_day`. |
 | Failure rate rises | Agent, carrier, number, or contact data is unhealthy | Pause first, inspect samples and telemetry, then fix the cause. |
 
