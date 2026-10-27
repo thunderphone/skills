@@ -113,6 +113,24 @@ console.log(await response.json());
    transcripts, outcomes, opt-outs, time-window behavior, and stats before
    increasing volume.
 
+## Deliverability checklist
+
+Carriers label numbers as spam from how they call. Before a large campaign:
+
+- Use a pool of local numbers sized so daily calls per number stay under
+  `max_calls_per_number_per_day`; number health flags over 50 calls a day.
+- Keep `window_timezone_mode: "contact"` and `retry_strategy: "spread"`.
+- Set the agent to leave a voicemail (`voicemail_action` `prompt` or
+  `message`, not `hangup`) and give each number an inbound agent so
+  callbacks reach someone.
+- Register caller names and Twilio numbers for spam filters on Phone
+  Numbers, and turn on Text before calling (`pre_call_sms_enabled`) for
+  contacts who agreed to texts.
+- Watch `GET /v1/phone-numbers/health` while it runs. Retire a number that
+  gets labeled; never add fresh numbers to hide it.
+
+See [get outbound calls answered](https://thunderphone.com/docs/guides/outbound-deliverability.md).
+
 ## Errors
 
 | Symptom | Cause | Fix |

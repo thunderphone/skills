@@ -77,6 +77,23 @@ console.log(await response.json());
 7. **Switch to campaigns for volume.** Use the `run-campaign` skill for contact
    imports, calling windows, pause/cancel controls, and aggregate statistics.
 
+## Deliverability checklist
+
+Campaign pacing does not apply to `POST /v1/call`, so the caller's code does it:
+
+- Choose a `from_number` with the contact's area code and reuse it for
+  that person. Keep each number well under 100 calls a day.
+- Call in the contact's local hours, and retry on another day at another
+  time, not on a short loop.
+- Send any heads-up text with `POST /v1/sms` only to people who agreed to it.
+- Set the agent to leave a voicemail rather than hang up, and give the
+  number an inbound agent so callbacks reach someone.
+- Read `answered_by` on finished calls and watch
+  `GET /v1/phone-numbers/health`. Retire a labeled number; never rotate
+  fresh numbers to hide it.
+
+See [get outbound calls answered](https://thunderphone.com/docs/guides/outbound-deliverability.md).
+
 ## Errors
 
 | Symptom | Cause | Fix |
