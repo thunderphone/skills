@@ -75,6 +75,27 @@ if (!response.ok) throw new Error(await response.text());
 console.log(await response.json());
 ```
 
+   Optional: text each contact a few minutes before the first call
+   (text-then-call). The MCP `create_campaign` tool does not take these fields
+   yet, so set them with `PATCH /v1/campaigns/{campaign_id}`. The sender must be
+   an SMS-capable number on the customer's own Twilio or Telnyx account (never
+   a ThunderPhone number), US local numbers need approved A2P 10DLC, and every
+   contact must have consented to texts as well as calls. A blank template uses
+   the default; `pre_call_sms_lead_minutes` is 1-60.
+
+```json
+{
+  "pre_call_sms_enabled": true,
+  "pre_call_sms_from_number": "${SMS_FROM_NUMBER}",
+  "pre_call_sms_template": "Hi {{first_name}}, this is {{org_name}}. We'll call you in a few minutes from {{call_from_number}}. Reply STOP to opt out of texts.",
+  "pre_call_sms_lead_minutes": 2
+}
+```
+
+   Only first attempts are texted; a failed or skipped text never blocks the
+   call. Read a `pre_call_sms_sender_not_ready` entry in `warnings` (contacts are
+   called without a text until it clears) and each contact's `pre_call_sms`
+   outcome in `GET /v1/campaigns/{campaign_id}`.
 4. **Load contacts.** Use `POST /v1/campaigns/{campaign_id}/contacts` with CSV or
    JSON. Imports are capped per request; split larger lists (the API reference
    gives the current limit). Every contact must have agreed to be called. Normalize
