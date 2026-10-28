@@ -1,16 +1,18 @@
 {
-  "status": "2026-10-23: materials ready; app not yet created in the portal (steps: portal-steps.md, run by Claude on Alex's Mac). Separate from the ThunderPhone developer plugin.",
+  "status": "2026-10-28: submitted to OpenAI as app plugin_asdk_app_6ae1238aef8081919ef00861fc0c6c34, version 1.0.1, in review. This file matches 1.0.1. Separate from the ThunderPhone developer plugin.",
   "listing": {
     "appName": "ThunderPhone Calls",
     "shortDescription": "Have an AI call a business for you.",
-    "longDescription": "Ask ChatGPT to phone a restaurant, shop or salon for you. ThunderPhone Calls finds the business, you confirm what to ask, and an AI voice assistant calls the business's listed number, says it's an AI calling for you, and reports back what they said: book a table, check hours or stock, or move an appointment. Free: a few calls a day to US businesses during their opening hours. No account needed.",
-    "category": "Productivity (or Lifestyle if offered)",
+    "longDescription": "Ask ChatGPT to phone a restaurant, shop or salon for you. ThunderPhone Calls finds the business, you confirm what to ask, and an AI voice assistant calls the business's listed number, says it's an AI calling for you, and reports back what they said: book a table, check hours or stock, or move an appointment. Calls go to US businesses during their opening hours, a few a day. No account needed.",
+    "category": "Productivity",
     "websiteURL": "https://thunderphone.com",
     "supportEmail": "support@thunderphone.com",
     "privacyPolicyURL": "https://thunderphone.com/calls/privacy",
     "termsOfServiceURL": "https://thunderphone.com/calls/terms",
     "developer": "Autophonix, LLC d/b/a ThunderPhone (verified business identity, org-y9gN8mOgBJD4i4ehn8Ar9YH5)",
-    "logo": "landing/public/brand/ thunderbolt mark on white, 512x512 PNG (same as the ThunderPhone plugin)"
+    "logo": "The ThunderPhone plugin's 512x512 white bolt on yellow.",
+    "subtitle": "AI calls businesses for you",
+    "supportURL": "https://thunderphone.com/docs"
   },
   "starterPrompts": [
     "Call ThunderPhone Demo Bistro and book a table for 2 at 7pm under Sam.",
@@ -47,6 +49,18 @@
       "userPrompt": "Call ThunderPhone Demo Bistro and ask if they have a gluten-free pizza crust.",
       "expectedBehavior": "Confirms, places the call, and reports the host's answer (yes, gluten-free crust is available) from get_call_result.",
       "fixture": "Demo restaurant line."
+    },
+    {
+      "name": "Ask the closing time",
+      "userPrompt": "Call ThunderPhone Demo Bistro and ask what time they close tonight.",
+      "expectedBehavior": "Confirms, places the call, and reports the host's answer: \"We close at ten tonight.\"",
+      "fixture": "Demo restaurant line."
+    },
+    {
+      "name": "Move a reservation",
+      "userPrompt": "Call ThunderPhone Demo Bistro and move my 7pm reservation under Sam to 8pm.",
+      "expectedBehavior": "Confirms, places the call, and reports the host's answer: \"Certainly. Sam's table for two is now at eight tonight.\"",
+      "fixture": "Demo restaurant line."
     }
   ],
   "negativeTestCases": [
@@ -68,5 +82,6 @@
   ],
   "reviewerNotes": "No account or password needed. Use ThunderPhone Demo Bistro for call tests: it is our own demo restaurant line and answers at any hour. Real businesses are called only during their listed opening hours (and 9am-9pm local), so a real-business test outside US business hours is refused by design. Each ChatGPT user can place 3 calls a day to real businesses and 10 to the demo line. Calls are recorded; the AI says it is an AI assistant calling on the user's behalf.",
   "availability": "United States (calls go only to US businesses).",
-  "demoRecording": "TBD: ChatGPT Developer Mode recording of the 3 positive and 3 negative cases against the demo line."
+  "demoRecording": "https://cdn.thunderphone.com/review/L2OinI2dIFwQrb9ViD4dZRtU/thunderphone-calls-demo.mp4 (2:36, 5 positive then 3 negative cases on the demo line).",
+  "reviewerCredentials": "Separate reviewer ThunderPhone login alex+openai-review@thunderphone.com (org 172, ThunderPhone Review Sandbox), sign-in at https://app.thunderphone.com/login; password in Alex's password manager. Signing in only changes the quota key; calls still go out from the consumer org."
 }
