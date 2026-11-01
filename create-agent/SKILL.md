@@ -14,11 +14,11 @@ metadata:
    estimates.
 
 <!-- rate:tiers -->
-| Tier | `product` values | Current base rate | Choose it for |
-|---|---|---:|---|
-| Spark | `spark` | 2¢/minute | Structured, narrow calls where cost is the priority. |
-| Bolt | `bolt` | 5¢/minute | General production calls that need stronger reasoning. |
-| Storm | `storm-base`, `storm-base-with-ack`, `storm-extra`, `storm-extra-with-ack` | 9¢/minute | Complex conversations and the highest capability. |
+| Tier | `product` values | Choose it for |
+|---|---|---|
+| Spark | `spark` | Structured, narrow calls where cost is the priority. |
+| Bolt | `bolt` | General production calls that need stronger reasoning. |
+| Storm | `storm-base`, `storm-base-with-ack`, `storm-extra`, `storm-extra-with-ack` | Complex conversations and the highest capability. |
 <!-- /rate -->
 
 2. **Resolve real options.** Call `GET /v1/voices` and use its returned voice ID.
