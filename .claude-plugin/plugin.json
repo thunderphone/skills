@@ -1,6 +1,6 @@
 {
   "name": "thunderphone",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Build, connect, test, and migrate ThunderPhone voice agents.",
   "author": {
     "name": "ThunderPhone",
@@ -9,5 +9,6 @@
   "homepage": "https://thunderphone.com/docs",
   "repository": "https://github.com/thunderphone/skills",
   "license": "MIT",
+  "privacyPolicyUrl": "https://thunderphone.com/privacy",
   "mcpServers": "./.mcp.json"
 }

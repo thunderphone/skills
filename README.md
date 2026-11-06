@@ -32,25 +32,45 @@ which is a generated Codex mirror.
 
 ## Connect the MCP server
 
-Set `THUNDERPHONE_API_KEY` in your shell without printing it, then use the
-client-specific command or checked-in config:
+The plugin connects to ThunderPhone's MCP server,
+`https://api.thunderphone.com/v1/mcp`, and signs in with OAuth: the first tool
+call opens a browser where you approve one ThunderPhone organization, and the
+client keeps the token. No config in this repository carries a credential, and
+the plugin never reads one from your machine.
 
 ```bash
-# Claude Code: keep the environment-variable reference in the project config.
-claude mcp add --transport http --scope project --header 'Authorization: Bearer ${THUNDERPHONE_API_KEY}' thunderphone https://api.thunderphone.com/v1/mcp
+# Claude Code (the plugin adds this for you)
+claude mcp add --transport http --scope project thunderphone https://api.thunderphone.com/v1/mcp
 
-# Codex: Codex reads the token from the named environment variable.
-codex mcp add thunderphone --url https://api.thunderphone.com/v1/mcp --bearer-token-env-var THUNDERPHONE_API_KEY
+# Codex
+codex mcp add thunderphone --url https://api.thunderphone.com/v1/mcp
+codex mcp login thunderphone
 
 # Cursor: copy the project-scoped config from this repository.
 mkdir -p /path/to/your-project/.cursor
 cp .cursor/mcp.json /path/to/your-project/.cursor/mcp.json
 ```
 
-VS Code can use `.vscode/mcp.json`. The repository also includes root
-`.mcp.json` and Codex `mcp.json` variants. See the
+VS Code can use `.vscode/mcp.json`. See the
 [`thunderphone-mcp-setup`](./thunderphone-mcp-setup/SKILL.md) skill for all
 supported clients.
+
+## What the plugin runs and sends
+
+- **MCP server:** the plugin's only server is the remote ThunderPhone MCP
+  server above. Tool calls go to ThunderPhone with your OAuth token and act only
+  in the organization you approved. Deletes always ask for your confirmation
+  first; in Claude, so does every call and text.
+- **Skills:** Markdown procedures. Their REST examples are code for your own
+  application, which authenticates to ThunderPhone's API with your own
+  organization key; the plugin itself never reads or sends that key.
+- No hooks, no local servers, no package installs.
+
+Your MCP client stores the OAuth token; ThunderPhone keeps only a hashed copy
+to check it. To disconnect, open **Organization → API keys → Authorized apps**
+in the ThunderPhone dashboard and choose **Revoke**
+([OAuth guide](https://thunderphone.com/docs/guides/oauth.md)). What ThunderPhone
+collects and how it is used is in the [privacy policy](https://thunderphone.com/privacy).
 
 The server is listed in the official MCP Registry as
 `io.github.thunderphone/thunderphone` (`server.json` in this repo). After changing that file,

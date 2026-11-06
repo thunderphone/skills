@@ -6,12 +6,12 @@
   },
   "metadata": {
     "description": "Skills for building and operating ThunderPhone voice agents",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "thunderphone",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "description": "Build, connect, test, and migrate ThunderPhone voice agents.",
       "source": "./",
       "strict": false,

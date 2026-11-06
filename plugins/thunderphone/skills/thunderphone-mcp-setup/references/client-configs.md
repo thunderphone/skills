@@ -2,13 +2,11 @@
 
 Endpoint: `https://api.thunderphone.com/v1/mcp`
 
-Claude Code and root portable config use `mcpServers`, `type: http`, `url`, and
-`headers`. Cursor also uses `mcpServers`. VS Code uses `servers` and
-`${env:THUNDERPHONE_API_KEY}`. Codex can store the bearer-token environment
-variable through `codex mcp add`. Claude Desktop supports remote custom
-connectors through its settings UI. Gemini CLI stores project MCP servers in
-`.gemini/settings.json`.
+Claude Code and the root portable config use `mcpServers`, `type: http`, and
+`url`. Cursor also uses `mcpServers`. VS Code uses `servers`. Codex adds the
+server with `codex mcp add` and signs in with `codex mcp login`. Claude (web,
+desktop, mobile) connects from the connector directory or as a custom connector.
+Gemini CLI stores project MCP servers in `.gemini/settings.json`.
 
-In every client, keep the key in the environment or protected connector
-credential field. Never replace a variable reference with a literal key in a
-project file.
+None of these configs carries a header: each client signs in with OAuth and
+keeps the token in its own credential store.
