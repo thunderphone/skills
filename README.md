@@ -107,12 +107,9 @@ Treat the production OpenAPI document and the raw Markdown documentation as the
 source of truth. Keep procedures concise, use real methods and fields, and do
 not include credentials or fabricated resource identifiers.
 
-After editing a canonical skill, refresh and validate the generated Codex tree:
-
-```bash
-./scripts/sync-plugin-tree.sh
-./scripts/sync-plugin-tree.sh --check
-```
+After editing a canonical skill, refresh and validate the generated Codex tree
+(the sync script lives in the ThunderPhone monorepo, outside this pack, as
+`scripts/agent-skills-sync-plugin-tree.sh`).
 
 Keep each root skill and its copy under `plugins/thunderphone/skills/`
 byte-identical. Pull requests should include both sides of that generated tree.
