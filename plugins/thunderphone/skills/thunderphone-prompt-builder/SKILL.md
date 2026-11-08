@@ -36,7 +36,10 @@ has every guideline with its id; MCP clients can read it as the resource
    used for force. When the agent ignores an instruction, make it clearer
    or move it, rather than louder.
 5. **Make speech listenable.** One question per turn, with the question
-   last. Short turns. No symbols the voice will misread (slashes,
+   last. Short turns in complete first-person sentences, the way a
+   receptionist talks on the phone ("I'll book that for you now"), not
+   clipped notes ("Booking that for you.") or email phrasing ("Kindly
+   ...", "I hope this helps"). No symbols the voice will misread (slashes,
    ampersands, "@", ".com", phone numbers written without spaces). Say
    what to confirm (names, numbers, emails, addresses, codes) in the form
    they were given; the platform paces the read-back.
