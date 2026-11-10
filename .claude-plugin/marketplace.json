@@ -36,6 +36,7 @@
         "./migrate-from-retell",
         "./migrate-from-bland",
         "./migrate-from-elevenlabs",
+        "./migrate-off-thunderphone",
         "./thunderphone-mcp-setup"
       ],
       "mcpServers": "./.mcp.json"

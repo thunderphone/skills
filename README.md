@@ -99,6 +99,7 @@ this directory.
 - `migrate-from-retell` — import Retell agents and close manual migration gaps.
 - `migrate-from-bland` — import Bland agents and close manual migration gaps.
 - `migrate-from-elevenlabs` — import ElevenLabs agents and close manual migration gaps.
+- `migrate-off-thunderphone` — export an agent and rebuild it on LiveKit Agents, Pipecat, Vapi, or Retell.
 - `thunderphone-mcp-setup` — configure the MCP server for six coding-agent clients.
 
 ## Contributing
