@@ -115,6 +115,11 @@ After editing a canonical skill, refresh and validate the generated Codex tree
 Keep each root skill and its copy under `plugins/thunderphone/skills/`
 byte-identical. Pull requests should include both sides of that generated tree.
 
+The Claude plugin directory lists `plugins/thunderphone-claude/`, not this root
+pack: OAuth MCP tools only, with the skills from
+`plugins/thunderphone-directory/skills/` that Claude's tool profile can run. The
+same sync script refreshes it.
+
 ## Maintainers
 
 This repository is a generated public mirror of ThunderPhone's canonical skill
