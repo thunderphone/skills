@@ -1,8 +1,8 @@
 ---
 name: use-with-livekit
-description: Connect LiveKit Agents to ThunderPhone Realtime. Use when someone asks for the ThunderPhone LiveKit plugin, the current GitHub fork install, livekit-agents compatibility, an OpenAI Realtime endpoint swap, saved agent_id sessions, or LiveKit voice-agent troubleshooting.
+description: Connect LiveKit Agents to ThunderPhone Realtime. Use when someone asks for the ThunderPhone LiveKit plugin, installing livekit-plugins-thunderphone, livekit-agents compatibility, an OpenAI Realtime endpoint swap, saved agent_id sessions, or LiveKit voice-agent troubleshooting.
 license: MIT
-compatibility: Requires Python, livekit-agents 1.8 or newer, the current ThunderPhone plugin fork, THUNDERPHONE_API_KEY, and a configured LiveKit project.
+compatibility: Requires Python, livekit-agents 1.8 or newer, livekit-plugins-thunderphone, THUNDERPHONE_API_KEY, and a configured LiveKit project.
 metadata:
   author: thunderphone
   version: "1.0"
@@ -10,16 +10,17 @@ metadata:
 
 # Use ThunderPhone with LiveKit
 
-1. **Install the current source honestly.** The published package name is
-   `livekit-plugins-thunderphone`, but the current documented install comes from
-   the LiveKit Agents fork branch:
+1. **Install the official plugin.** The ThunderPhone plugin ships in the
+   LiveKit Agents repository and is published to PyPI as
+   `livekit-plugins-thunderphone`, released with `livekit-agents` itself:
 
 ```bash
-pip install "git+https://github.com/kolchinski/agents@add-thunderphone-plugin#subdirectory=livekit-plugins/livekit-plugins-thunderphone"
+pip install livekit-plugins-thunderphone
+# or, with uv: uv add "livekit-agents[thunderphone]~=1.8"
 ```
 
-   Require `livekit-agents` 1.8 or newer and pin a reviewed commit for a
-   production lockfile. Do not imply the fork is an upstream release.
+   Require `livekit-agents` 1.8 or newer and pin both packages to the same
+   release in a production lockfile.
 2. **Keep both systems' credentials server-side.** Load LiveKit credentials and
    `THUNDERPHONE_API_KEY` from the runtime secret store.
 3. **Choose saved or inline configuration.** A saved deployed agent centralizes
@@ -72,7 +73,7 @@ if (!r.ok) throw new Error(await r.text()); console.log(await r.json());
 
 | Symptom | Cause | Fix |
 |---|---|---|
-| Package cannot be found or lacks plugin | Upstream package has not caught up with the fork | Install the documented fork path and pin a reviewed commit. |
+| `livekit.plugins.thunderphone` cannot be imported | Plugin not installed, or `livekit-agents` older than 1.8 | Install `livekit-plugins-thunderphone` at the same version as `livekit-agents` (1.8 or newer). |
 | Worker joins but model is unauthorized | ThunderPhone key is absent or invalid | Load the server-side environment variable and verify with a read-only API call. |
 | Agent behavior is stale | Wrong saved agent or undeployed draft | Confirm agent ID and deploy the intended revision. |
 | Room survives after agent failure | Lifecycle cleanup is incomplete | Close the realtime model and audio/session resources on shutdown paths. |
@@ -80,7 +81,7 @@ if (!r.ok) throw new Error(await r.text()); console.log(await r.json());
 ## Source and safety rules
 
 - Follow [use with LiveKit](https://thunderphone.com/docs/guides/use-with-livekit.md) and the [Realtime API](https://thunderphone.com/docs/api-reference/realtime.md).
-- State that the current install is a fork until the official guide changes.
+- Install from PyPI (`livekit-plugins-thunderphone`); the old `kolchinski/agents` fork branch is obsolete.
 - Keep all API and room tokens server-side and out of logs.
 - Verify audio and lifecycle behavior in a real room before a readiness claim.
 

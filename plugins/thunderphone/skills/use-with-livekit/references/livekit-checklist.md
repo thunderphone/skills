@@ -1,7 +1,7 @@
 # LiveKit integration checklist
 
 - `livekit-agents` is 1.8 or newer.
-- The documented plugin fork is installed and pinned for production.
+- `livekit-plugins-thunderphone` is installed from PyPI at the same version as `livekit-agents` and pinned for production.
 - LiveKit and ThunderPhone credentials stay server-side.
 - The intended ThunderPhone agent revision is deployed.
 - Room, participant, realtime model, and audio resources share one lifecycle.
