@@ -23,8 +23,16 @@ metadata:
    `language_switching`, `voicemail_action`, `transfer_destinations`.
 4. **Create it** with `create_agent`. A new agent has no phone number, so it
    takes no calls. Do not call `deploy_agent` until the user has seen a test.
-5. **Hand over** the `web_url` from the result and offer the next step: test it
-   (the test-agent skill).
+5. **Let them hear it.** Offer to let the user hear the agent right away. With
+   their OK (a simulated call is paid from the free test credit first), call
+   `run_simulation` with a `scenario_prompt` for a typical caller (made-up
+   name and details, never real personal or health information) and
+   `consent_to_charge` set to true, poll `get_simulation` until it is
+   completed, then give them its recording link to play and a line on how the
+   call went. If they would rather talk to it themselves, `create_talk_link`
+   gives a link they open in a browser. Mention the `web_url` from the result
+   as the place to see and edit the agent in the dashboard, then offer the next
+   step: more tests (the test-agent skill).
 
 ## Never
 
