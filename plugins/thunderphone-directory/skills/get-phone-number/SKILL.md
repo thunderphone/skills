@@ -5,17 +5,26 @@ license: MIT
 compatibility: Requires the ThunderPhone MCP server, connected with OAuth. No step asks for a password, API key or other secret.
 metadata:
   author: thunderphone
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Get a phone number
 
 ## A ThunderPhone number
 
-1. Check `get_phone_number_limits` and `get_billing_summary`.
-2. Tell the user the monthly price, then `provision_phone_number` with the area
-   code they want.
+1. Check `get_phone_number_limits` and `get_billing_summary`. A number is paid
+   from the prepaid balance, not the free test credit, and the balance must
+   cover the first month's price. If it doesn't, say so and give the billing
+   link before anything else; a small top-up is enough.
+2. Tell the user the monthly price and get their yes, then
+   `provision_phone_number` with the area code they want. Buying charges right
+   away, with no second confirmation, so never buy on a guess.
 3. Route it with `update_phone_number` `inbound_agent_id`.
+
+To keep a number customers already know, the simplest way is call forwarding
+from their current line to the ThunderPhone number, set up with their carrier.
+New ThunderPhone numbers take calls but cannot call out until outbound calling
+is approved (see the call-a-person skill).
 
 ## The user's own carrier
 
