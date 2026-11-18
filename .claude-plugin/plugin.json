@@ -1,7 +1,8 @@
 {
   "name": "thunderphone",
+  "displayName": "ThunderPhone",
   "version": "1.2.0",
-  "description": "Build, test and run ThunderPhone AI phone agents through the ThunderPhone MCP server.",
+  "description": "Build, test and run voice AI phone agents from Claude. Get phone numbers, place calls, run test calls, review call recordings and transcripts for AI receptionists and call center voice agents.",
   "author": {
     "name": "ThunderPhone",
     "email": "support@thunderphone.com",
@@ -11,6 +12,15 @@
   "repository": "https://github.com/thunderphone/skills",
   "license": "MIT",
   "privacyPolicyUrl": "https://thunderphone.com/privacy",
-  "keywords": ["thunderphone", "voice-ai", "phone-agents", "telephony"],
+  "keywords": [
+    "thunderphone",
+    "voice-agent",
+    "voice-ai",
+    "phone-agent",
+    "ai-receptionist",
+    "call-center",
+    "phone-number",
+    "telephony"
+  ],
   "mcpServers": "./.mcp.json"
 }
