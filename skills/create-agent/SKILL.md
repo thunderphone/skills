@@ -5,34 +5,50 @@ license: MIT
 compatibility: Requires the ThunderPhone MCP server, connected with OAuth. No step asks for a password, API key or other secret.
 metadata:
   author: thunderphone
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Create an agent
 
-1. **Understand the job.** Ask what the agent is for, who calls, what a good call
-   ends with and what it must never do. Ask one question at a time and stop once
-   you can build something testable. Read the method in
-   `thunderphone://guides/working-with-thunderphone`.
+1. **Build first, ask after.** With a business type and a name you can build a
+   testable draft: do it, say what you assumed, and ask the rest afterwards.
+   Ask up front only for what a first call gets wrong without it, usually the
+   city (for the time zone and hours). Ask one question at a time. Read the
+   method in `thunderphone://guides/working-with-thunderphone`.
 2. **Check what is possible.** Use `get_agent_capabilities`,
-   `get_supported_languages` and `list_voices` instead of guessing. Use
+   `get_supported_languages` and `list_voices` instead of guessing, and look at
+   the account with tools, not from memory of an earlier chat. Use
    `preview_voice` when the user wants to hear a voice.
-3. **Write the prompt** in the house style (`thunderphone://guides/prompt-style`).
+3. **Say what a choice costs.** Some voices and longer prompts raise the price a
+   minute (`get_billing_summary` has the prices). Tell the user before you
+   switch to a voice that costs more, not when the deploy fails.
+4. **Write the prompt** in the house style (`thunderphone://guides/prompt-style`).
    Put behavior that a setting controls in the setting, not in prompt text:
    `endpointing`, `tool_start_line`, `silence_checkins_enabled`,
-   `language_switching`, `voicemail_action`, `transfer_destinations`.
-4. **Create it** with `create_agent`. A new agent has no phone number, so it
-   takes no calls. Do not call `deploy_agent` until the user has seen a test.
-5. **Let them hear it.** Offer to let the user talk to the agent right away:
+   `language_switching`, `voicemail_action`, `transfer_destinations`. An agent
+   that will call people needs an opening that says who is calling and why, and
+   `voicemail_action` `message` with a `voicemail_message` that does the same:
+   without it the agent makes up a voicemail from an inbound script ("returning
+   your call").
+5. **Create it** with `create_agent`. A new agent has no phone number, so it
+   takes no calls. Do not call `deploy_agent` until the user has heard or seen a
+   test, and never ask "ready to go live?" before that.
+6. **Let them hear it.** Offer to let the user talk to the agent right away:
    `create_talk_link` gives a link they open in a browser to talk to it, paid
-   from the free test credit. If they would rather hear a scripted caller, with
-   their OK call `run_simulation` with a `scenario_prompt` for a typical caller
-   (made-up name and details, never real personal or health information) and
-   `consent_to_charge` set to true, poll `get_simulation` until it is
-   completed, then give them its recording link to play soon (it expires) and
-   a line on how the call went. Mention the `web_url` from the result
-   as the place to see and edit the agent in the dashboard, then offer the next
-   step: more tests (the test-agent skill).
+   from the free test credit. The link works once. If the user says the agent
+   could not hear them, read the call with `get_call_transcript` before
+   suggesting a microphone problem: the page can warn about the microphone
+   while the agent heard every word. If they would rather hear a scripted
+   caller, with their OK call `run_simulation` with a `scenario_prompt` for a
+   typical caller (made-up name and details, never real personal or health
+   information) and `consent_to_charge` set to true, poll `get_simulation`
+   until it is completed, then give them its recording link to play soon (it
+   expires) and a line on how the call went. Mention the `web_url` from the
+   result as the place to see and edit the agent in the dashboard, then offer
+   the next step: more tests (the test-agent skill).
+7. **Callers who speak another language** hear the agent in that language, but
+   check what the opening AI notice and any recording notice say, and tell the
+   user if they are still in English.
 
 ## Never
 
