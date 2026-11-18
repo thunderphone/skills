@@ -3,6 +3,16 @@
 The package the Claude plugin directory lists. Its submission's **Plugin path** is
 `plugins/thunderphone-claude`, so the directory reads and scans only this folder.
 
+## Try asking
+
+- "What can ThunderPhone do for my business?"
+- "Set up something to answer the phone for my dog grooming shop."
+- "Build an agent that can call me, and let me hear it first."
+- "Move my receptionist over from Vapi."
+
+Claude builds a first version right away, lets you talk to it in your browser,
+and asks before anything costs money or goes live.
+
 ## What it runs and sends
 
 - **MCP server:** the only server is ThunderPhone's remote MCP server,
