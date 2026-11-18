@@ -1,7 +1,7 @@
 {
   "name": "thunderphone",
   "displayName": "ThunderPhone",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Build, test and run voice AI phone agents from Claude. Get phone numbers, place calls, run test calls, review call recordings and transcripts for AI receptionists and call center voice agents.",
   "author": {
     "name": "ThunderPhone",
