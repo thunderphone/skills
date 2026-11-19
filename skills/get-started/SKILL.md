@@ -1,6 +1,6 @@
 ---
 name: get-started
-description: Take someone new from "what is this?" to an AI phone agent they have heard, then a number and live calls. Use right after ThunderPhone is connected or installed, and for first-time or vague asks such as "what can thunderphone do", "set up thunderphone", "help me get started", "how does this work" or "make me a phone agent", in any language.
+description: Take someone new from "what is this?" to an AI phone agent they have heard, then a number and live calls. Use when someone new to ThunderPhone asks what it does or wants their first ThunderPhone agent, such as "what can ThunderPhone do", "set up ThunderPhone" or "make me a ThunderPhone agent", in any language.
 license: MIT
 compatibility: Requires the ThunderPhone MCP server, connected with OAuth. No step asks for a password, API key or other secret.
 metadata:
@@ -56,8 +56,10 @@ at any point means build now with what you have.
 
 **B. Call my customers**
 1. Who will it call? People who asked us to call / Our customers / A list we
-   bought or found / Just me, to try it. A bought or scraped list is a no: ask
-   whether these people asked to hear from them, and go back if not.
+   bought or found / Just me, to try it. For any audience, ask whether these
+   people agreed to get calls from the business. A bought or scraped list is a
+   no. For an offer, a win-back or a review request, they must have agreed in
+   writing to marketing calls; if they have not, say so and stop.
 2. What's the call for? Follow up on a form or quote / Remind about an
    appointment / Ask for a review / Win back past customers.
 3. What's your business called, and what kind is it? (typed)
@@ -76,8 +78,8 @@ at any point means build now with what you have.
 
 **D. Just show me**
 1. Pick one to hear (you play the caller): a restaurant taking an order / a
-   dentist booking a cleaning / a plumber's emergency line / a realtor
-   following up a lead / a clinic that speaks Spanish. Build that sample and
+   salon booking a haircut / a plumber's emergency line / a realtor
+   following up a lead / a hotel front desk that speaks Spanish. Build that sample and
    let them hear it.
 2. Want one like that? Make one like this for me (go to A) / Show me another.
 
@@ -98,8 +100,8 @@ changes").
 1. **Look before you ask.** `list_agents`. If they already have agents, ask
    whether this is a new one or a change to one they have (the
    iterate-on-agent skill). If they mean another business they run in
-   ThunderPhone, `list_organizations` and `switch_organization` where this chat
-   has them.
+   ThunderPhone, show their organizations with `list_organizations` where this
+   chat has it, ask which one, and `switch_organization` to it.
 2. **They said enough to build** (a business and what callers want, a script,
    or "just call me"): skip the question and go to "Build it" in this reply.
 3. **They were vague** ("what can it do?", "set it up", or nothing yet): say in
@@ -112,13 +114,13 @@ changes").
 | They want | What to do |
 |---|---|
 | Their business phone answered (receptionist, bookings, after hours, screening) | Build it, below |
-| An agent that calls them (a briefing, a reminder, "call me when...") | Build it and let them hear it, then the call-a-person skill. Say early what works: one call now, after their yes, from a number that can call out. A call cannot be scheduled, repeated daily or held until a task finishes, and the agent has no memory of earlier calls and no web search |
-| A call to a business for them (quotes, a booking change) | Allowed: a business line. Build an agent whose prompt holds the errand, then the call-a-person skill |
+| An agent that calls them (a briefing, a reminder, "call me when...") | Build it and let them hear it, then the call-a-person skill. This chat places a call now, after their yes, from a number that can call out; for a call every morning, the user triggers each call from their own scheduler |
+| A call to a business for them (quotes, a booking change) | Allowed: a business's public line, for a non-sales errand the user would make themselves. Build an agent whose prompt holds the errand, then the call-a-person skill |
 | A message to a friend or family member | Ask whether that person agreed to get the call, then the call-a-person skill |
-| Calls to a list (follow-ups, reminders, surveys) | Build it and let them hear it. The list itself is a campaign (the run-campaign skill where campaign tools are available, otherwise Campaigns in ThunderPhone), not one call at a time |
+| Calls to a list (follow-ups, reminders, surveys) | Build it and let them hear it. The list itself is a campaign, which the user creates in Campaigns in ThunderPhone, not one call at a time |
 | Moving agents from Vapi, Retell, ElevenLabs or Bland | That platform's migrate skill (`start_agent_import`); the key goes in ThunderPhone itself (the `web_url`), never in chat |
-| A recording of a script read aloud (a voice-over) | Not a phone agent: Voices in ThunderPhone makes the audio. `preview_voice` only plays a short sample |
-| A live interpreter between two people | `search_docs` for interpreting first, and build only if that does not fit |
+| A recording of a script read aloud (a voice-over) | Say plainly that ThunderPhone makes phone agents, not audio recordings. `preview_voice` only plays a voice's fixed sample |
+| A live interpreter between two people | `search_docs` for interpreting, and tell the user what the docs say before building anything |
 | Something else | Check `get_agent_capabilities` and `search_docs`. If it is not possible, say so plainly, offer the nearest thing that works, and `request_feature` after asking what they need it for |
 
 Never build an agent that takes card numbers, government ID numbers or health
@@ -179,9 +181,9 @@ prepaid balance does. If neither covers it, say so and give the
 small top-up is enough. Say an agent's price a minute only from its `price`
 (`get_agent`) or the purchase preview's `agent_prices`, the figures ThunderPhone
 shows; never add a per-minute part to them yourself. Then ask for the area
-code, tell them the price, and buy
-with `provision_phone_number` only after their yes (when it returns a
-`confirmation_token`, show its preview and send the token after the yes).
+code and tell them the price. `provision_phone_number` first returns a
+preview and a `confirmation_token`: show the preview, and send the token only
+after their yes.
 Where `provision_phone_number` takes `agent_id`, pass the agent: the same yes
 buys the number, connects it and puts the agent live, so there is no separate
 going-live question.
@@ -197,4 +199,4 @@ ring the number from their own phone, confirm the call arrived with
 `list_calls`, and give the agent's `web_url` as the place to see it in
 ThunderPhone (a call's `view_url`, when it has one, shows that call).
 
-Docs: https://thunderphone.com/docs/guides/build-an-agent
+Docs for the user: https://thunderphone.com/docs/guides/build-an-agent

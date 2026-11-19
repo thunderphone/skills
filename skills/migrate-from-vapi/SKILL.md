@@ -23,4 +23,4 @@ metadata:
 4. **Test before switching traffic.** Run `test_in_text` and `test_my_agent` on
    each new agent, then move numbers only when the user is happy.
 
-Docs: https://thunderphone.com/docs/guides/import-agents
+Docs for the user: https://thunderphone.com/docs/guides/import-agents
