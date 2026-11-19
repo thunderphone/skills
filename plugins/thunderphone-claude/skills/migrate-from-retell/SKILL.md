@@ -14,7 +14,7 @@ metadata:
    and give the user its `web_url`. They enter their Retell API key there,
    never in chat. If they paste a key into the chat, do not use it, and suggest
    they rotate it.
-2. **Follow the import** with `get_agent_import`. Show each Retell agent
+2. **Check on the import** with `get_agent_import`. Show each Retell agent
    with its mapped name, voice, tier and warnings. The warnings name what did
    not carry over; plan those with the user.
 3. **Finish after a yes** with `commit_agent_import`, choosing `item_ids` when the
