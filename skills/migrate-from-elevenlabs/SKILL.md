@@ -10,7 +10,7 @@ metadata:
 
 # Migrate from ElevenLabs
 
-1. **Start in the dashboard.** Call `start_agent_import` with platform `elevenlabs`
+1. **Start in ThunderPhone.** Call `start_agent_import` with platform `elevenlabs`
    and give the user its `web_url`. They enter their ElevenLabs API key there,
    never in chat. If they paste a key into the chat, do not use it, and suggest
    they rotate it.

@@ -1,40 +1,26 @@
-# ThunderPhone plugin for the Claude directory
+# ThunderPhone
 
-The package the Claude plugin directory lists. Its submission's **Plugin path** is
-`plugins/thunderphone-claude`, so the directory reads and scans only this folder.
+Build an AI phone agent without leaving the chat.
+
+- Answer your business's calls: questions, bookings, messages
+- Call your customers, or make calls for you
+
+Claude asks a few quick questions with answers to tap and builds your agent.
+Then you talk to it: it calls your phone, or you talk in your browser, and the
+conversation shows as it happens. When it sounds right, get it a number for $1
+and it's live. Claude asks before anything costs money.
 
 ## Try asking
 
-- "What can ThunderPhone do for my business?"
-- "Set up something to answer the phone for my dog grooming shop."
-- "Build an agent that can call me, and let me hear it first."
+- "Set up something to answer my business phone."
+- "Build an agent that calls me every morning."
 - "Move my receptionist over from Vapi."
 
-Claude builds a first version right away, lets you talk to it in your browser,
-and asks before anything costs money or goes live.
+## What it connects to
 
-## What it runs and sends
-
-- **MCP server:** the only server is ThunderPhone's remote MCP server,
-  `https://api.thunderphone.com/v1/mcp`. The first tool call opens a ThunderPhone
-  sign-in, you pick the organization and scopes, and Claude stores the OAuth token.
-  Tool calls go to ThunderPhone with that token and act only on that organization.
-- **Skills:** instructions for using the MCP tools. They run no scripts, make no
-  REST calls and never read a key or token from your machine. Anything that needs
-  a secret, such as a vendor key for an import, is entered in the ThunderPhone
-  dashboard, never in chat.
-- **Confirmation:** test calls, real calls, texts and other billable or outward
-  actions ask for your yes first.
-
-To disconnect, open **Organization → API keys → Authorized apps** in the
-ThunderPhone dashboard and revoke Claude.
-
-## Source
-
-The skills are copies of `plugins/thunderphone-directory/skills/`, without
-`run-campaign`: Claude's MCP tool profile has no campaign tools. Edit the
-directory copy, then run `scripts/agent-skills-sync-plugin-tree.sh`;
-`scripts/agent-skills-check.py` fails when the two drift, when a skill here
-names a tool Claude's profile hides, or when anything here handles a credential.
-The REST skill pack at the repository root, which uses an API key, is not part
-of this plugin.
+ThunderPhone's MCP server only (https://api.thunderphone.com/v1/mcp). You sign
+in to ThunderPhone once, and Claude acts only in your organization. Skills are
+instructions only: no scripts, and nothing that needs a key is ever entered in
+chat. Test calls, real calls, texts and anything else billable ask for your yes
+first. To disconnect, go to Settings → Security in ThunderPhone and revoke
+Claude.
