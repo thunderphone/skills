@@ -1,6 +1,6 @@
 ---
 name: test-agent
-description: Test a ThunderPhone agent and decide whether it is ready to deploy. Use when someone asks to test an agent, run test scenarios or simulated calls, check a change before deploying, or read test results.
+description: Test a ThunderPhone agent and decide whether it is ready to deploy. Use when someone asks to test a ThunderPhone agent, run its test scenarios or simulated calls, check a change before deploying, or read test results.
 license: MIT
 compatibility: Requires the ThunderPhone MCP server, connected with OAuth. No step asks for a password, API key or other secret.
 metadata:
@@ -32,4 +32,4 @@ Pick the check that fits the change and what it could break.
    one change. Make it on the draft with `update_agent` and test again.
 5. **Deploy only after a yes** with `deploy_agent`.
 
-Docs: https://thunderphone.com/docs/guides/test-agents
+Docs for the user: https://thunderphone.com/docs/guides/test-agents

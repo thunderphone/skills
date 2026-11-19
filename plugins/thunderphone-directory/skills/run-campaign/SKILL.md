@@ -29,4 +29,4 @@ metadata:
 
 Never call a list with repeated `place_call`; a list is a campaign.
 
-Docs: https://thunderphone.com/docs/guides/outbound-campaigns
+Docs for the user: https://thunderphone.com/docs/guides/outbound-campaigns

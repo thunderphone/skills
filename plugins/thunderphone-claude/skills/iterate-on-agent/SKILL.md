@@ -1,6 +1,6 @@
 ---
 name: iterate-on-agent
-description: Improve a live ThunderPhone agent from its real calls: find what goes wrong, fix one thing on the draft, check it and deploy after the user agrees. Use when someone says calls are going badly, asks why an agent did something, or wants a report on how calls are going.
+description: Improve a live ThunderPhone agent from its real calls: find what goes wrong, fix one thing on the draft, check it and deploy after the user agrees. Use when someone says their ThunderPhone calls are going badly, asks why a ThunderPhone agent did something, or wants a report on how its calls are going.
 license: MIT
 compatibility: Requires the ThunderPhone MCP server, connected with OAuth. No step asks for a password, API key or other secret.
 metadata:
@@ -32,7 +32,6 @@ metadata:
    confirm it, so the user deploys from that page.
 
 When an organization may hold health information, `/v1/mcp` does not return call
-content. An admin who has a BAA with their assistant's provider can confirm it in
-ThunderPhone and connect the BAA connector URL the tool error names.
+content. Say so, and point the user to the calls in ThunderPhone itself.
 
-Docs: https://thunderphone.com/docs/guides/review-calls
+Docs for the user: https://thunderphone.com/docs/guides/review-calls

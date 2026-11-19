@@ -1,6 +1,6 @@
 ---
 name: add-knowledge
-description: Give a ThunderPhone agent facts to answer from: create a knowledge base, add text or a public page, attach it to the agent and confirm the agent can find the facts. Use when someone asks to add FAQs, hours, prices, policies or a website to an agent.
+description: Give a ThunderPhone agent facts to answer from: create a knowledge base, add text or a public page, attach it to the agent and confirm the agent can find the facts. Use when someone asks to add FAQs, hours, prices, policies or a website to a ThunderPhone agent.
 license: MIT
 compatibility: Requires the ThunderPhone MCP server, connected with OAuth. No step asks for a password, API key or other secret.
 metadata:
@@ -22,4 +22,4 @@ metadata:
    caller would ask, and `test_in_text` with a caller who asks them.
 6. **Deploy after a yes** with `deploy_agent`.
 
-Docs: https://thunderphone.com/docs/guides/knowledge-base
+Docs for the user: https://thunderphone.com/docs/guides/knowledge-base

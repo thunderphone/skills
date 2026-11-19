@@ -1,6 +1,6 @@
 ---
 name: create-agent
-description: Build a ThunderPhone AI phone agent from a plain-language brief and leave it as a draft that is ready to test. Use when someone asks to create a receptionist, booking, intake, support or outbound agent, pick a voice or language, or set up how the agent handles transfers, voicemail and silence.
+description: Build a ThunderPhone AI phone agent from a plain-language brief and leave it as a draft that is ready to test. Use when someone asks to create a ThunderPhone agent (a receptionist, booking, intake, support or outbound phone agent), pick its voice or language, or set up how the agent handles transfers, voicemail and silence.
 license: MIT
 compatibility: Requires the ThunderPhone MCP server, connected with OAuth. No step asks for a password, API key or other secret.
 metadata:
@@ -63,4 +63,4 @@ metadata:
 - Never ask the user for passwords or API keys. Integration credentials are
   entered in ThunderPhone itself (the agent's `web_url`).
 
-Docs: https://thunderphone.com/docs/guides/build-an-agent
+Docs for the user: https://thunderphone.com/docs/guides/build-an-agent

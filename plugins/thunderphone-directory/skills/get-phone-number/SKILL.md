@@ -1,6 +1,6 @@
 ---
 name: get-phone-number
-description: Get a phone number for a ThunderPhone agent: buy a ThunderPhone number or bring the user's own carrier, then route it to an agent. Use when someone asks for a number, wants an agent to answer calls, or wants to use their Twilio, Telnyx or SIP numbers.
+description: Get a phone number for a ThunderPhone agent: buy a ThunderPhone number or bring the user's own carrier, then route it to an agent. Use when someone asks for a ThunderPhone number, wants a ThunderPhone agent to answer calls, or wants to bring their Twilio, Telnyx or SIP numbers into ThunderPhone.
 license: MIT
 compatibility: Requires the ThunderPhone MCP server, connected with OAuth. No step asks for a password, API key or other secret.
 metadata:
@@ -19,10 +19,9 @@ metadata:
    and give the `add_funds_url` from the result (it takes a card too) before anything else;
    a small top-up is enough.
 2. Tell the user the monthly price and get their yes, then
-   `provision_phone_number` with the area code they want. When it returns a
-   `confirmation_token`, nothing is bought yet: show the user its preview and
-   send the token back only after their yes. Otherwise buying charges right
-   away, so never buy on a guess. For what calls will cost a minute, use the
+   `provision_phone_number` with the area code they want. It first returns a
+   preview and a `confirmation_token` and buys nothing: show the user the
+   preview and send the token back only after their yes. For what calls will cost a minute, use the
    preview's `agent_prices` or the agent's `price` (`get_agent`): it says
    whether the phone line is included. Don't add a per-minute part yourself.
 3. Route it with `update_phone_number` `inbound_agent_id`.
@@ -39,8 +38,9 @@ The carrier password is entered in ThunderPhone itself, never in chat.
 
 1. Send the user to the carrier setup in ThunderPhone to start a guided setup
    (`get_voip_setup_session` returns the link as `web_url`).
-2. Follow it with `get_voip_setup_session` and answer its questions with
-   `answer_voip_setup_question`. Passwords, the server address, the username,
+2. Follow it with `get_voip_setup_session`. Show the user each question the
+   setup returns and pass on their answer with `answer_voip_setup_question`;
+   never answer for them. Passwords, the server address, the username,
    test-call consent and signing ThunderPhone in to the provider account are
    answered in the setup wizard only.
 3. When it is connected, save it with `save_voip_setup` after the user's yes,
@@ -49,4 +49,4 @@ The carrier password is entered in ThunderPhone itself, never in chat.
 If calls to a number fail, run `check_phone_number` and explain what its result
 shows.
 
-Docs: https://thunderphone.com/docs/guides/get-a-phone-number
+Docs for the user: https://thunderphone.com/docs/guides/get-a-phone-number
