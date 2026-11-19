@@ -15,11 +15,21 @@ actually want, in as few replies as possible. Reply in their language, keep each
 reply short, ask one question at a time, and explain a term the first time you
 use it. Read the method in `thunderphone://guides/working-with-thunderphone`.
 
+**Where this chat has `interview_next`, it runs the first chat**: make it your
+first tool call, with no step and the person's first message, and nothing
+before it (not `list_agents`: its first card already offers their existing
+agents, and a card only shows when its call stands alone). After each answer
+call it again with that step and the answer. Say only the line it gives you and
+do what its next step says; its cards ask the questions, so never retype them
+as a list. The sections below are the same path for chats without it.
+
 ## First reply
 
 1. **Look before you ask.** `list_agents`. If they already have agents, ask
    whether this is a new one or a change to one they have (the
-   iterate-on-agent skill).
+   iterate-on-agent skill). If they mean another business they run in
+   ThunderPhone, `list_organizations` and `switch_organization` where this chat
+   has them.
 2. **They said enough to build** (a business and what callers want, a script,
    or "just call me"): skip the question and go to "Build it" in this reply.
 3. **They were vague** ("what can it do?", "set it up", or nothing yet): say in
@@ -38,9 +48,9 @@ use it. Read the method in `thunderphone://guides/working-with-thunderphone`.
 | An agent that calls them (a briefing, a reminder, "call me when...") | Build it and let them hear it, then the call-a-person skill. Say early what works: one call now, after their yes, from a number that can call out. A call cannot be scheduled, repeated daily or held until a task finishes, and the agent has no memory of earlier calls and no web search |
 | A call to a business for them (quotes, a booking change) | Allowed: a business line. Build an agent whose prompt holds the errand, then the call-a-person skill |
 | A message to a friend or family member | Ask whether that person agreed to get the call, then the call-a-person skill |
-| Calls to a list (follow-ups, reminders, surveys) | Build it and let them hear it. The list itself is a campaign (the run-campaign skill where campaign tools are available, otherwise the ThunderPhone dashboard), not one call at a time |
-| Moving agents from Vapi, Retell, ElevenLabs or Bland | That platform's migrate skill (`start_agent_import`); the key goes in the dashboard, never in chat |
-| A recording of a script read aloud (a voice-over) | Not a phone agent: the dashboard's Voices page makes the audio. `preview_voice` only plays a short sample |
+| Calls to a list (follow-ups, reminders, surveys) | Build it and let them hear it. The list itself is a campaign (the run-campaign skill where campaign tools are available, otherwise Campaigns in ThunderPhone), not one call at a time |
+| Moving agents from Vapi, Retell, ElevenLabs or Bland | That platform's migrate skill (`start_agent_import`); the key goes in ThunderPhone itself (the `web_url`), never in chat |
+| A recording of a script read aloud (a voice-over) | Not a phone agent: Voices in ThunderPhone makes the audio. `preview_voice` only plays a short sample |
 | A live interpreter between two people | `search_docs` for interpreting first, and build only if that does not fit |
 | Something else | Check `get_agent_capabilities` and `search_docs`. If it is not possible, say so plainly, offer the nearest thing that works, and `request_feature` after asking what they need it for |
 
@@ -53,17 +63,19 @@ information from callers; offer a flow that does not.
    they gave no hours, prices or rules, the agent takes the caller's name,
    number and what they need, and promises a callback instead of making
    anything up. A system it cannot reach yet (a calendar, a CRM) does not hold
-   it up: the agent takes the request for a person to confirm. Pick a standard
-   voice that fits (`list_voices`); a caller who speaks another language needs
-   `primary_language` set (`get_supported_languages`). An agent that calls
+   it up: the agent takes the request for a person to confirm. Use the
+   language's `default_voice` from `get_supported_languages`, and call
+   `list_voices` only when the user asks about voices; a caller who speaks
+   another language needs `primary_language` set. An agent that calls
    people opens with who is calling and why, and gets `voicemail_action`
    `message` with a `voicemail_message`.
-2. **Say what you assumed** in two to four short lines (for example: it takes
-   messages, does not quote prices, assumes Central time). Those lines are
-   where they correct you.
-3. **Let them hear it in the same reply.** `create_talk_link` gives a link they
-   open to talk to the agent in the browser, paid from the free test credit; it
-   works once. Tell them one thing to try that shows the agent works ("ask
+2. **Don't list your guesses.** One short line on what it does is enough. The
+   facts it still guesses (hours, prices) come up after they have heard it.
+3. **Let them hear it in the same reply.** Where this chat has `talk_to_agent`,
+   use it: its card calls their phone or opens the talk page, and shows the
+   conversation, so they stay in the chat. Otherwise `create_talk_link` gives
+   a link they open to talk to the agent in the browser, paid from the free
+   test credit; it works once. Tell them one thing to try that shows the agent works ("ask
    whether you're open Sunday"). No phone number is needed for this. Someone who
    cannot use a microphone can hear a simulated caller instead (`run_simulation`
    after their OK). If they say it could not hear them, read the call with
@@ -74,7 +86,8 @@ Do not ask "ready to go live?" before they have heard it.
 
 ## One round of changes
 
-After they have heard it, ask what to change, and list in one message the facts
+After they have heard it, ask what to change (with `ask_user` where this chat
+has it: one question per card), and list in one message the facts
 it still guesses (hours, the number to transfer to, what to say about prices), so
 they can answer in any order. Make the changes on the draft with `update_agent`
 (`prompt_edits` for prompt text), check them with `test_in_text` (a caller who
@@ -92,21 +105,29 @@ phone company (the simplest way to keep it), or their own carrier (the
 get-phone-number skill).
 
 For a new number, check `get_billing_summary` first: the monthly price is
-`phone_number_monthly_cents`, and the number is paid from the prepaid balance,
-not the free test credit. If the balance does not cover it, say so and give the
-billing link before anything else; a small top-up is enough. Then ask for the
-area code, tell them the price, and buy with `provision_phone_number` only after
-their yes: buying charges at once.
+`phone_number_monthly_cents`. The free test credit pays the first month of one
+number per account (then add funds within 7 days to keep it); otherwise the
+prepaid balance does. If neither covers it, say so and give the
+`add_funds_url` from the result (it takes a card too) before anything else; a
+small top-up is enough. Say an agent's price a minute only from its `price`
+(`get_agent`) or the purchase preview's `agent_prices`, the figures ThunderPhone
+shows; never add a per-minute part to them yourself. Then ask for the area
+code, tell them the price, and buy
+with `provision_phone_number` only after their yes (when it returns a
+`confirmation_token`, show its preview and send the token after the yes).
+Where `provision_phone_number` takes `agent_id`, pass the agent: the same yes
+buys the number, connects it and puts the agent live, so there is no separate
+going-live question.
 
 ## Going live
 
-Say exactly what will happen ("calls to (512) 555-0142 will reach the Happy Paws
-agent") and act only after their yes: route the number with
+Say exactly what will happen, with the number and the business name they gave
+(never one you made up), and act only after their yes: route the number with
 `update_phone_number` `inbound_agent_id`, and `deploy_agent` if `get_agent`
 shows changes waiting in the draft. Every call opens with a spoken AI notice;
 for another language, check whether it is still in English. Then ask them to
 ring the number from their own phone, confirm the call arrived with
-`list_calls`, and give the agent's `web_url` as the place to see it in the
-dashboard.
+`list_calls`, and give the agent's `web_url` as the place to see it in
+ThunderPhone (a call's `view_url`, when it has one, shows that call).
 
 Docs: https://thunderphone.com/docs/guides/build-an-agent

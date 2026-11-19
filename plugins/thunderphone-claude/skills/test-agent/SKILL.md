@@ -17,7 +17,7 @@ Pick the check that fits the change and what it could break.
 | Text test | `test_in_text` | Free, about a minute | Wording, facts, which tools the agent calls |
 | Saved scenarios | `test_my_agent` | Test credit first | A pass/fail run over the agent's scenarios |
 | One simulated call | `run_simulation` | Test credit first | Timing, the voice, hearing the caller |
-| Talk to it | `create_talk_link` | Billed like a test call | The user's own ear |
+| Talk to it | `talk_to_agent` where available, else `create_talk_link` | Billed like a test call | The user's own ear |
 
 1. **Text first.** Run `test_in_text` on the draft with callers aimed at the
    change and one whose call should go as before. Read each transcript the way a

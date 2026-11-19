@@ -120,6 +120,15 @@ pack: OAuth MCP tools only, with the skills from
 `plugins/thunderphone-directory/skills/` that Claude's tool profile can run. The
 same sync script refreshes it.
 
+Its README is the directory's long description, so it holds only user-facing
+text. Its skills are copies of `plugins/thunderphone-directory/skills/`, without
+`run-campaign` (Claude's MCP tool profile has no campaign tools). Edit the
+directory copy, then run `scripts/agent-skills-sync-plugin-tree.sh`;
+`scripts/agent-skills-check.py` fails when the two drift, when a skill there
+names a tool Claude's profile hides, or when anything there handles a
+credential. The REST skill pack at this root, which uses an API key, is not part
+of the Claude plugin.
+
 ## Maintainers
 
 This repository is a generated public mirror of ThunderPhone's canonical skill

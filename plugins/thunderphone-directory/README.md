@@ -18,5 +18,5 @@ and every backticked tool, argument or result name must exist in `api/orgs/mcp_t
 link code beside it), so renaming a tool fails the check instead of a reviewer's chat.
 
 Rules for adding one: the user never types a password, API key or other secret into chat (send them to the
-dashboard page instead), billable or outward actions say they need the user's yes, and agents are never set up to
+ThunderPhone page a result's `web_url` opens instead), billable or outward actions say they need the user's yes, and agents are never set up to
 collect payment card numbers, government ID numbers or health information.
