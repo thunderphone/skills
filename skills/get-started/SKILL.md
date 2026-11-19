@@ -12,16 +12,86 @@ metadata:
 
 The goal of a first chat is an agent the person has heard, built for what they
 actually want, in as few replies as possible. Reply in their language, keep each
-reply short, ask one question at a time, and explain a term the first time you
-use it. Read the method in `thunderphone://guides/working-with-thunderphone`.
+reply to a line or two, ask one question at a time, and explain a term the first
+time you use it. Don't use words like draft, deploy or agent id with someone new:
+say "your agent", "I changed it", "callers will hear this". Never suggest a
+business name they didn't give.
 
-**Where this chat has `interview_next`, it runs the first chat**: make it your
-first tool call, with no step and the person's first message, and nothing
-before it (not `list_agents`: its first card already offers their existing
-agents, and a card only shows when its call stands alone). After each answer
-call it again with that step and the answer. Say only the line it gives you and
-do what its next step says; its cards ask the questions, so never retype them
-as a list. The sections below are the same path for chats without it.
+## The setup questions
+
+Ask these one at a time. Where this chat has `ask_user`, ask each one with it,
+so the person taps an answer in a card (one question per card, with a box to
+type their own). Otherwise ask in text and list the answers. After each answer,
+reply with one short line about what the agent will do with it, then ask the
+next question. Skip any question their messages already answered ("a receptionist
+for my dental office" skips straight to when it should pick up). "Just build it"
+at any point means build now with what you have.
+
+1. **What do you want a phone agent to do for you?**
+   - Answer my business's calls: go to A.
+   - Call my customers for me: go to B.
+   - Make calls for me (quotes, bookings, checking on things): go to C.
+   - Just show me what it can do: go to D.
+   - I'm building for clients or my app: go to E.
+
+**A. Answer my business's calls**
+1. What's your business called, and what kind is it? (typed)
+2. When should it pick up? When we're busy or don't answer / Every call / After
+   hours only / Not sure yet (start with missed calls; easy to change).
+3. What do people usually call about? Offer four or five topics that fit the
+   kind of business (an auto shop: parts in stock, prices, booking a repair,
+   hours, is my car ready); they can pick several.
+4. When someone calls about the first topic, what should it do?
+   - Take a message: it takes the caller's name, number and what they need.
+   - Answer it: where can it learn the answers? Our website (ask for the link
+     and add it with the add-knowledge skill) / I'll type a few things (ask for
+     them after they've heard it) / Skip for now (it takes a message when it
+     doesn't know; it never guesses).
+   - Book them in: where do you keep bookings? It takes the time the caller
+     wants for them to confirm; connecting a calendar comes later.
+   - Pass them to a person: what number should it pass calls to? (typed)
+5. Who should answer the phone? Offer two or three voices from `list_voices`
+   (play one with `preview_voice` if they ask). Then build it and let them hear
+   it ("Build it" below).
+
+**B. Call my customers**
+1. Who will it call? People who asked us to call / Our customers / A list we
+   bought or found / Just me, to try it. A bought or scraped list is a no: ask
+   whether these people asked to hear from them, and go back if not.
+2. What's the call for? Follow up on a form or quote / Remind about an
+   appointment / Ask for a review / Win back past customers.
+3. What's your business called, and what kind is it? (typed)
+4. What's a great call? They book a time / They confirm / They say yes to an
+   offer / We get their answers.
+5. Roughly how many people? A handful (each call placed after their OK, the
+   call-a-person skill) / Dozens or more (that's a campaign).
+6. Who should it sound like? (the voice step in A), then build and hear it.
+
+**C. Make calls for me**
+1. What do you need? Get quotes / Book something / Check if something's
+   available.
+2. Tell me what you need, like you'd tell a friend. (typed) Then build a small
+   agent whose prompt holds the errand, let them hear it, and place each call
+   with the call-a-person skill after their yes.
+
+**D. Just show me**
+1. Pick one to hear (you play the caller): a restaurant taking an order / a
+   dentist booking a cleaning / a plumber's emergency line / a realtor
+   following up a lead / a clinic that speaks Spanish. Build that sample and
+   let them hear it.
+2. Want one like that? Make one like this for me (go to A) / Show me another.
+
+**E. Building for clients or an app**
+- Agents for my clients: do the first client through A.
+- Voice inside my own app: point them to the API docs
+  (https://thunderphone.com/docs) and offer a sample agent through A.
+- Moving from another platform: the migrate skill for Vapi, Retell, Bland or
+  ElevenLabs. They enter that platform's key in ThunderPhone itself, never in
+  chat.
+
+**After they've heard it:** How did that sound? Great (go to "A number") /
+Close, a few tweaks / Not right (ask what to change, then "One round of
+changes").
 
 ## First reply
 
@@ -34,11 +104,8 @@ as a list. The sections below are the same path for chats without it.
    or "just call me"): skip the question and go to "Build it" in this reply.
 3. **They were vague** ("what can it do?", "set it up", or nothing yet): say in
    two lines what ThunderPhone does (AI agents that answer or make real phone
-   calls; you hear it in your browser before anything goes live; tests use free
-   credit), then ask the one question: what should it do for you? Give three
-   examples that fit what they said, such as answer my shop's phone and take
-   messages, call me with a reminder, or call a business for me. No list of
-   setup questions, prices or settings yet.
+   calls; you hear it before anything goes live; tests use free credit), then
+   ask question 1 of the setup questions. No list of prices or settings yet.
 
 ## Pick the path
 
@@ -63,9 +130,9 @@ information from callers; offer a flow that does not.
    they gave no hours, prices or rules, the agent takes the caller's name,
    number and what they need, and promises a callback instead of making
    anything up. A system it cannot reach yet (a calendar, a CRM) does not hold
-   it up: the agent takes the request for a person to confirm. Use the
-   language's `default_voice` from `get_supported_languages`, and call
-   `list_voices` only when the user asks about voices; a caller who speaks
+   it up: the agent takes the request for a person to confirm. Use the voice
+   they picked, or else the language's `default_voice` from
+   `get_supported_languages`; a caller who speaks
    another language needs `primary_language` set. An agent that calls
    people opens with who is calling and why, and gets `voicemail_action`
    `message` with a `voicemail_message`.

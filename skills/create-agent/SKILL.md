@@ -13,8 +13,7 @@ metadata:
 1. **Build first, ask after.** With a business type and a name you can build a
    testable draft: do it, say what you assumed, and ask the rest afterwards.
    Ask up front only for what a first call gets wrong without it, usually the
-   city (for the time zone and hours). Ask one question at a time. Read the
-   method in `thunderphone://guides/working-with-thunderphone`.
+   city (for the time zone and hours). Ask one question at a time.
 2. **Check what is possible.** Use `get_agent_capabilities` and
    `get_supported_languages` instead of guessing, and look at the account with
    tools, not from memory of an earlier chat. Use the language's
@@ -23,7 +22,10 @@ metadata:
 3. **Say what a choice costs.** Some voices and longer prompts raise the price a
    minute (`get_billing_summary` has the prices). Tell the user before you
    switch to a voice that costs more, not when the deploy fails.
-4. **Write the prompt** in the house style (`thunderphone://guides/prompt-style`).
+4. **Write the prompt** for the ear: short sentences, one question at a time,
+   no lists read aloud, and never a made-up fact (it takes a message instead).
+   The first line greets with the business name; it never opens with what it
+   can't do. `review_prompt` checks a prompt against ThunderPhone's style rules.
    Put behavior that a setting controls in the setting, not in prompt text:
    `endpointing`, `tool_start_line`, `silence_checkins_enabled`,
    `language_switching`, `voicemail_action`, `transfer_destinations`. An agent
