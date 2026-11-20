@@ -25,7 +25,7 @@
       "interface": {
         "displayName": "ThunderPhone",
         "shortDescription": "Build voice AI phone agents",
-        "longDescription": "ThunderPhone is a voice AI platform for AI phone agents: AI receptionists, support lines and outbound calls. Describe your business in a line and ThunderPhone asks a few quick questions with answers to tap, builds your agent, and lets you hear it: it rings your phone or opens a talk page, and the conversation shows in the chat as it happens. When it sounds right, one yes buys a phone number for $1 a month, connects it to the agent and puts it live.\n\nYou can also change an agent and check the change in a free text test before it goes live, run test calls, add knowledge from a website or text, change organization settings such as business hours, place a call or send a text after you approve that one call or text, run campaigns to people who agreed to be called, diagnose a phone number or a campaign, get a call report, and bring agents over from Vapi, Retell, ElevenLabs or Bland.\n\nEvery action is scoped to the ThunderPhone organization you authorize with OAuth, and results link to the matching ThunderPhone page. Anything billable or irreversible, such as test calls, calls, texts, a number purchase, campaigns, blocking callers or deleting an agent, asks for your yes first. No tool asks for passwords, API keys or payment details: those are entered in ThunderPhone.",
+        "longDescription": "ThunderPhone is a voice AI platform for AI phone agents: AI receptionists, support lines and outbound calls. Describe your business in a line and ThunderPhone asks a few quick questions with answers to tap, builds your agent, and lets you hear it: it rings your phone or opens a talk page, and the conversation shows in the chat as it happens. When it sounds right, one yes gets it a phone number, connects the number to the agent and puts it live.\n\nYou can also change an agent and check the change in a quick text test before it goes live, run test calls, add knowledge from a website or text, change organization settings such as business hours, place a call or send a text after you approve that one call or text, run campaigns to people who agreed to be called, diagnose a phone number or a campaign, get a call report, and bring agents over from other voice AI platforms.\n\nEvery action is scoped to the ThunderPhone organization you authorize with OAuth, and results link to the matching ThunderPhone page. Anything billable or irreversible, such as test calls, calls, texts, a number purchase, campaigns, blocking callers or deleting an agent, asks for your yes first. No tool asks for passwords, API keys or payment details: those are entered in ThunderPhone.",
         "developerName": "ThunderPhone",
         "category": "Business & Operations",
         "capabilities": [
@@ -39,7 +39,7 @@
         "defaultPrompt": [
           "Use ThunderPhone to set up an AI receptionist that answers my business phone.",
           "Use ThunderPhone to build an agent that calls me, and let me hear it first.",
-          "Use ThunderPhone to move my receptionist over from Vapi."
+          "Use ThunderPhone to move my receptionist over from my current voice AI platform."
         ],
         "brandColor": "#0B0A08",
         "composerIcon": "./assets/logo.png",
