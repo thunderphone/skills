@@ -32,42 +32,6 @@ New ThunderPhone numbers take calls but cannot call out until outbound calling
 is approved: give the `outbound_request_url` from `list_phone_numbers` or
 `get_account_limits` (see the call-a-person skill).
 
-## A number in another country
-
-ThunderPhone numbers outside the US need paperwork for the phone company
-there: a few typed details, an address and one or two documents (such as a
-recent bill or a company registration).
-
-Where this chat has these tools:
-
-1. "Can I get a number in X?": answer from `get_number_options_abroad`. It
-   says whether ThunderPhone sells numbers there, the price, what sending an
-   order takes and from which balance (`when_sent`), what an incoming minute
-   adds (`incoming`), and what is asked, step by step. Say the price, those
-   lines, and one sentence on what is asked.
-2. Gather the typed steps in the conversation (who the number is for and its
-   name, the details it lists with a `key`, the address) and save them with
-   `save_number_order_details`. Pass only what the user said.
-3. Give the user the `web_url` it returns (or the one from
-   `start_number_order_abroad`): they add the documents in ThunderPhone, from
-   a phone photo or a PDF. If they already started an order for that country,
-   the link carries on with it.
-4. Once nothing is left, the order is sent from ThunderPhone or with
-   `send_number_order`. Its first call sends nothing and returns the price,
-   what sending takes, the refund promise and the number's notices with a
-   `confirmation_token`: show the user exactly that and send the token back
-   only after their yes. If the price or what pays it changed, it previews
-   again instead of charging.
-5. `list_number_orders` says where an order is; give the `web_url` of one that
-   needs the user. Never promise a date.
-
-Documents, photos of them and ID numbers are added in ThunderPhone, not in
-chat; no tool takes one. Nothing is charged before the order is sent; sending
-takes the first month and setup, and all of it comes back if the phone company
-turns the order down or it is cancelled before approval.
-Where ThunderPhone doesn't sell numbers in the country, or this chat has none
-of these tools, bring the user's own carrier (below).
-
 ## The user's own carrier
 
 The carrier password is entered in ThunderPhone itself, never in chat.
