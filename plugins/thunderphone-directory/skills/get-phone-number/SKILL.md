@@ -26,20 +26,54 @@ metadata:
    whether the phone line is included. Don't add a per-minute part yourself.
 3. Route it with `update_phone_number` `inbound_agent_id`.
 
-For a toll-free number ("an 800 number"): when `search_toll_free_numbers` is
-listed, ThunderPhone sells them. Search with `starts_with` (888) or `contains`
-(letters like FLOWERS), let the user pick one, then `provision_phone_number`
-with `toll_free` true and that `number`. Before their yes, tell them what the
-preview says: callers pay nothing and they pay each incoming minute at its
-rate, no 911, no business name shown, no texts for now. When it isn't listed,
-ThunderPhone doesn't sell them yet: a toll-free number from their own carrier
-connects below.
-
 To keep a number customers already know, the simplest way is call forwarding
 from their current line to the ThunderPhone number, set up with their carrier.
 New ThunderPhone numbers take calls but cannot call out until outbound calling
 is approved: give the `outbound_request_url` from `list_phone_numbers` or
 `get_account_limits` (see the call-a-person skill).
+
+## A number in another country
+
+ThunderPhone sells its own numbers in some countries outside the US;
+`get_number_options_abroad` says which today. Where ThunderPhone doesn't sell
+a number, the user can connect a compatible carrier or SIP service (below).
+
+Numbers abroad come with paperwork for the phone company there. These tools
+handle it; where this chat doesn't list them, the user orders a number abroad
+in ThunderPhone itself.
+
+- When the user asks whether they can get a number in a country, what it
+  costs or what it needs, use `get_number_options_abroad`. It says whether
+  ThunderPhone sells numbers there, the monthly and setup price, what an
+  incoming minute costs, and what that country's phone company asks for before
+  it gives a number: who the number is for, a few details, an address, and one
+  or more documents such as a recent bill or a company registration. It is
+  read-only.
+- When the user gives the typed details for an order, save them with
+  `save_number_order_details`: who the number is for and its name, the details
+  `get_number_options_abroad` lists with a `key`, and the address. Pass only
+  what the user gave for this order. It saves the order as not sent yet,
+  starting one if there is none, and sends nothing.
+- When the user is ready to add the documents, `start_number_order_abroad`
+  returns a `web_url` where they add them in ThunderPhone, from a phone photo
+  or a PDF. Don't ask for or pass documents, photos of them or ID numbers in
+  chat; these tools have no place for them.
+- When the user asks to send a finished order, use `send_number_order`. It
+  first returns a preview (the price, which balance pays it, the refund terms
+  and the number's notices) and a `confirmation_token`, and sends nothing:
+  show the user the preview and send the token back only after their yes. If
+  the terms change before then, it returns a new preview instead of charging.
+- When the user asks how an order is going, use `list_number_orders`. It shows
+  each order's step, with a `web_url` for one that needs the user. It gives no
+  approval or completion date, so don't promise one.
+- When the user asks to cancel an order, use `cancel_number_order`. Cancelling
+  one not sent yet deletes its details and documents. It first returns a
+  preview and a `confirmation_token`, and cancels nothing: send the token back
+  only after the user's yes.
+
+Nothing is charged before an order is sent. Sending takes the first month and
+any setup fee. What comes back if the phone company turns the order down
+depends on the phone company; the send preview says.
 
 ## The user's own carrier
 
