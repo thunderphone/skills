@@ -3,8 +3,22 @@
   "name": "io.github.thunderphone/thunderphone",
   "title": "ThunderPhone",
   "description": "Build, test, deploy and run AI phone agents: agents, numbers, calls, tests, knowledge, campaigns.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "websiteUrl": "https://thunderphone.com/developers",
+  "repository": {
+    "url": "https://github.com/thunderphone/skills",
+    "source": "github",
+    "id": "1372324791"
+  },
+  "icons": [
+    {
+      "src": "https://api.thunderphone.com/icon.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "512x512"
+      ]
+    }
+  ],
   "remotes": [
     {
       "type": "streamable-http",
