@@ -26,6 +26,15 @@ metadata:
    whether the phone line is included. Don't add a per-minute part yourself.
 3. Route it with `update_phone_number` `inbound_agent_id`.
 
+For a toll-free number ("an 800 number"): when `search_toll_free_numbers` is
+listed, ThunderPhone sells them. Search with `starts_with` (888) or `contains`
+(letters like FLOWERS), let the user pick one, then `provision_phone_number`
+with `toll_free` true and that `number`. Before their yes, tell them what the
+preview says: callers pay nothing and they pay each incoming minute at its
+rate, no 911, no business name shown, no texts for now. When it isn't listed,
+ThunderPhone doesn't sell them yet: a toll-free number from their own carrier
+connects below.
+
 To keep a number customers already know, the simplest way is call forwarding
 from their current line to the ThunderPhone number, set up with their carrier.
 New ThunderPhone numbers take calls but cannot call out until outbound calling
