@@ -35,31 +35,6 @@ New ThunderPhone numbers take calls but cannot call out until outbound calling
 is approved: give the `outbound_request_url` from `list_phone_numbers` or
 `get_account_limits` (see the call-a-person skill).
 
-## ThunderPhone calls that show the user's own number
-
-When the user wants their ThunderPhone agent's calls to show a number they
-already own (their mobile, their office line) instead of the ThunderPhone
-number, and this chat has `start_own_caller_number`:
-
-1. Ask for the number if they haven't given it. Only US numbers, and only on
-   calls to US numbers; elsewhere calls show the ThunderPhone number.
-2. `start_own_caller_number` with that `number` sends nothing yet: it returns
-   the price (paid from their ThunderPhone balance) and a `confirmation_token`.
-   Tell them the price, and only after their yes call it again with the token:
-   the phone company texts the number a code (`method` `call` reads it out
-   instead). With one ThunderPhone
-   number it is used; with several, nothing is sent and the refusal lists them,
-   so ask which and pass its `phone_number_id`.
-3. Give the user the result's `web_url`: the code is typed in the ThunderPhone
-   app there, and no tool accepts it. Don't ask for the code, and if they paste
-   one here, don't repeat it or pass it on.
-4. Tell them that anyone who calls the number back reaches their own phone, not
-   the agent, and that some phones may label these calls as spam more often.
-   `list_own_caller_numbers` shows whether it is confirmed and which numbers'
-   calls show it.
-
-Without these tools, calls show the ThunderPhone number.
-
 ## A number in another country
 
 ThunderPhone sells its own numbers in some countries outside the US;

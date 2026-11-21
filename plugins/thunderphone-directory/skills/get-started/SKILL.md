@@ -114,14 +114,14 @@ changes").
 | They want | What to do |
 |---|---|
 | Their business phone answered (receptionist, bookings, after hours, screening) | Build it, below |
-| An agent that calls them (a briefing, a reminder, "call me when...") | Build it and let them hear it, then the call-a-person skill. This chat places a call now, after their yes, from a number that can call out; for a call every morning, the user triggers each call from their own scheduler |
-| A call to a business for them (quotes, a booking change) | Allowed: a business's public line, for a non-sales errand the user would make themselves. Build an agent whose prompt holds the errand, then the call-a-person skill |
+| An agent that calls them (a briefing, a reminder, "call me when...") | Build it and let them hear it, then the call-a-person skill. This chat places one call now, after their yes, from a number that can call out; it does not schedule or repeat calls |
+| A call to a business for them (quotes, a booking change) | Allowed: a business's public landline (not a mobile), for a non-sales errand the user would make themselves. Build an agent whose prompt holds the errand, then the call-a-person skill |
 | A message to a friend or family member | Ask whether that person agreed to get the call, then the call-a-person skill |
 | Calls to a list (follow-ups, reminders, surveys) | Build it and let them hear it. The list itself is a campaign, which the user creates in Campaigns in ThunderPhone, not one call at a time |
 | Moving agents from Vapi, Retell, ElevenLabs or Bland | That platform's migrate skill (`start_agent_import`); the key goes in ThunderPhone itself (the `web_url`), never in chat |
 | A recording of a script read aloud (a voice-over) | Say plainly that ThunderPhone makes phone agents, not audio recordings. `preview_voice` only plays a voice's fixed sample |
 | A live interpreter between two people | `search_docs` for interpreting, and tell the user what the docs say before building anything |
-| Something else | Check `get_agent_capabilities` and `search_docs`. If it is not possible, say so plainly, offer the nearest thing that works, and `request_feature` after asking what they need it for |
+| Something else | Check `get_agent_capabilities` and `search_docs`. If it is not possible, say so plainly, offer the nearest thing that works, and offer a feature request; send `request_feature` only after they agree, without call content or caller details |
 
 Never build an agent that takes card numbers, government ID numbers or health
 information from callers; offer a flow that does not.
@@ -195,7 +195,7 @@ going-live question.
 Say exactly what will happen, with the number and the business name they gave
 (never one you made up), and act only after their yes: route the number with
 `update_phone_number` `inbound_agent_id`, and `deploy_agent` if `get_agent`
-shows changes waiting in the draft. Every call opens with a spoken AI notice;
+shows changes waiting in the draft. Calls open with a spoken AI notice by default;
 for another language, check whether it is still in English. Then ask them to
 ring the number from their own phone, confirm the call arrived with
 `list_calls`, and give the agent's `web_url` as the place to see it in
