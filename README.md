@@ -7,8 +7,8 @@ Build an AI phone agent without leaving the chat.
 
 Claude asks a few quick questions with answers to tap and builds your agent.
 Then you talk to it: it calls your phone, or you talk in your browser, and the
-conversation shows as it happens (where your Claude app shows cards). When it sounds right, get it a number for $1
-and it's live. Claude asks before anything costs money.
+conversation shows as it happens (where your Claude app shows cards). When it sounds right, get it a number
+(from $0.99 a month, plus a one-time $0.99 setup fee) and it's live. Claude asks before anything costs money.
 
 ## Try asking
 

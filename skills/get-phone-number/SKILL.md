@@ -13,12 +13,15 @@ metadata:
 ## A ThunderPhone number
 
 1. Check `get_phone_number_limits` and `get_billing_summary`. The free test
-   credit pays the first month of one number per account while $1 of it is
-   left (the user then adds funds within 7 days to keep it); otherwise the
-   prepaid balance must cover the first month's price. If it doesn't, say so
+   credit pays the first month and setup fee of one number per account while
+   that much of it is left (the user then adds funds within 7 days to keep
+   it); otherwise the
+   prepaid balance must cover the first month's price and the one-time
+   setup fee. If it doesn't, say so
    and give the `add_funds_url` from the result (it takes a card too) before anything else;
    a small top-up is enough.
-2. Tell the user the monthly price and get their yes, then
+2. Tell the user the number's monthly price and one-time setup fee and get
+   their yes, then
    `provision_phone_number` with the area code they want. It first returns a
    preview and a `confirmation_token` and buys nothing: show the user the
    preview and send the token back only after their yes. For what calls will cost a minute, use the
