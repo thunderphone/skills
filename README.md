@@ -129,6 +129,14 @@ names a tool Claude's profile hides, or when anything there handles a
 credential. The REST skill pack at this root, which uses an API key, is not part
 of the Claude plugin.
 
+A Claude plugin version is released by bumping its `plugin.json` version. The
+release goes out only after production's API is running every server change
+up to that commit (`scripts/ci/claude_plugin_release_ready.py`), and only if
+the package names nothing but tools production lists to Claude, none of which
+takes personal details, documents or secrets
+(`scripts/claude-plugin-surface-check.py`, which reads production's switch
+settings and also runs on every pull request that touches the plugin).
+
 ## Maintainers
 
 This repository is a generated public mirror of ThunderPhone's canonical skill
