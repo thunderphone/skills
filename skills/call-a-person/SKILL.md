@@ -11,8 +11,8 @@ metadata:
 # Have an agent call someone
 
 1. **Check who may be called.** Only a person who agreed to get this call, or a
-   business's public line for a non-sales errand the user would make themselves
-   (a quote, a booking). The user asking for a call to their own phone is their
+   business's public landline (not a mobile) for a non-sales errand the user
+   would make themselves (a quote, a booking). The user asking for a call to their own phone is their
    agreement. For anyone else, ask whether they agreed to get this call; if not,
    don't place it until they have.
 2. **Check the number can call out** before you show a call. Read the number in
@@ -38,11 +38,9 @@ metadata:
    `confirmation_token`: show the preview, and send the token only after that
    yes; it expires in 10 minutes, so place the call
    right away.
-5. **Calls later or every day.** `place_call` places one call, now. The plugin
-   does not schedule or repeat calls: for a call every morning, the user triggers
-   each call from whatever they already use to run things on a schedule (a
-   scheduled task in Claude, or their own automation calling the ThunderPhone
-   API). Build and test the agent here.
+5. **Calls later or every day.** `place_call` places one call, now, after the
+   user's yes. This plugin does not schedule or repeat calls; say so if they ask
+   for a call every day. Build and test the agent here.
 6. **After the call,** read it with `get_call` and `get_call_transcript` and tell
    the user how it went, including when it reached voicemail. To show them the
    call, give its `view_url` when the result has one, not a recording URL

@@ -27,11 +27,12 @@ metadata:
    ordinary caller. Larger changes deserve `test_my_agent` too.
 6. **Deploy after a yes** with `deploy_agent`, then watch the next calls. A
    longer prompt or a costlier voice can raise the price a minute: say so before
-   the deploy. When `deploy_agent` refuses a price rise, give the user the old and
-   new price and the agent page link from the error; `deploy_agent` cannot
-   confirm it, so the user deploys from that page.
+   the deploy. A deploy that raises the price a minute deploys nothing at first
+   and returns the old and new price: show them, and only after the user agrees
+   to the new price finish it the way the result describes (another
+   `deploy_agent` call, or the agent page it links).
 
-When an organization may hold health information, `/v1/mcp` does not return call
-content. Say so, and point the user to the calls in ThunderPhone itself.
+When an organization may hold health information, call content may be held back
+here. When it is, say so, and point the user to the calls in ThunderPhone itself.
 
 Docs for the user: https://thunderphone.com/docs/guides/review-calls

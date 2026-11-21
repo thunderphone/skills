@@ -1,6 +1,6 @@
 ---
 name: migrate-from-elevenlabs
-description: Move ElevenLabs agents to ThunderPhone without sharing a ElevenLabs key in chat. Use when someone asks to migrate or import from ElevenLabs, review what an import mapped, or finish an import.
+description: Move ElevenLabs agents to ThunderPhone without sharing an ElevenLabs key in chat. Use when someone asks to migrate or import from ElevenLabs, review what an import mapped, or finish an import.
 license: MIT
 compatibility: Requires the ThunderPhone MCP server, connected with OAuth. No step asks for a password, API key or other secret.
 metadata:
