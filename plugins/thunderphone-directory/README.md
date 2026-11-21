@@ -38,6 +38,10 @@ edit changes it, and the next daily scan sends the change to ChatGPT. Update the
 ChatGPT rescan. The demo recording (`review.demo_recording_url`) still shows 1.1; record a new one in ChatGPT
 before submitting. Alex owns the submission.
 
+For the next submission: `provision_phone_number`'s description still says "$1 a month" (kept byte for byte in
+`mcp_profiles._CHATGPT_SUBMITTED_NUMBER_DESCRIPTION` since US numbers moved to per-number prices); switch it to
+Claude's description and update the pinned hash at that submission.
+
 ## Try asking
 
 - "Set up something to answer my business phone."

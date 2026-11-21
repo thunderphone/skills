@@ -173,9 +173,11 @@ ThunderPhone number, the number they have now forwarded to a new one by their
 phone company (the simplest way to keep it), or their own carrier (the
 get-phone-number skill).
 
-For a new number, check `get_billing_summary` first: the monthly price is
-`phone_number_monthly_cents`. The free test credit pays the first month of one
-number per account (then add funds within 7 days to keep it); otherwise the
+For a new number, check `get_billing_summary` first: the usual monthly price is
+`phone_number_monthly_cents`, and a new number also has a one-time setup fee;
+some area codes cost more, and `provision_phone_number` shows the number's own
+price before anything is bought. The free test credit pays the first month and
+setup fee of one number per account (then add funds within 7 days to keep it); otherwise the
 prepaid balance does. If neither covers it, say so and give the
 `add_funds_url` from the result (it takes a card too) before anything else; a
 small top-up is enough. Say an agent's price a minute only from its `price`
