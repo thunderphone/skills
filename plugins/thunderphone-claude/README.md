@@ -31,9 +31,16 @@ information may be involved). To disconnect, go to Settings → Security in Thun
 Claude.
 
 ThunderPhone makes phone agents. Claude can't create voice clones or produce
-audio files of your text: voices speak only inside calls with your agent (phone
-calls with callers open with an AI notice by default, and test calls are yours). The only audio links are fixed voice samples and
+audio files of your text: voices speak only inside calls with your agent, and
+test calls are yours. The only audio links are fixed voice samples and
 recordings of calls.
+
+People your agent talks to are told. By default, every phone call your agent
+makes or answers opens with a spoken notice: "This call is with an AI
+assistant and will be recorded and transcribed." When recording is off, the
+notice says only that the caller is talking to an AI. Claude can't turn this
+notice off or reword it; it can be turned off only in ThunderPhone, by the
+account confirming that it tells callers itself.
 
 ## Troubleshooting
 
