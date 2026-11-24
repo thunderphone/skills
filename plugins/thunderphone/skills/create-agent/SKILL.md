@@ -1,6 +1,6 @@
 ---
 name: create-agent
-description: Create, configure, update, deploy, or discard a ThunderPhone voice agent. Use when someone asks to build an agent, choose Spark versus Bolt versus Storm, select a language or voice, call POST /v1/agents, or understand draft and deployed revisions.
+description: Create, configure, update, deploy, or discard a ThunderPhone voice agent. Use when someone asks to build an agent, choose its intelligence, hearing or reply speed, select a language or voice, call POST /v1/agents, or understand draft and deployed revisions.
 license: MIT
 compatibility: Requires THUNDERPHONE_API_KEY and an organization with access to the selected model and voice.
 metadata:
@@ -10,15 +10,16 @@ metadata:
 
 # Create a ThunderPhone agent
 
-1. **Select a tier.** Use current prices from the pricing guide, not cached
-   estimates.
+1. **Choose settings.** Every agent is `bolt`; start on the defaults. A call
+   costs its parts at list price plus a markup: see the pricing guide.
 
 <!-- rate:tiers -->
-| Tier | `product` values | Choose it for |
+| Field | Values | Choose it for |
 |---|---|---|
-| Spark | `spark` | Structured, narrow calls where cost is the priority. |
-| Bolt | `bolt` | General production calls that need stronger reasoning. |
-| Storm | `storm-base`, `storm-base-with-ack`, `storm-extra`, `storm-extra-with-ack` | Complex conversations and the highest capability. |
+| `product` | `bolt` | Every new agent. The older `spark` and `storm-*` values are still accepted. |
+| `intelligence` | `core`, `pro` (default) | `core` for plain FAQ or message-taking calls; `pro` for most agents. |
+| `audio_tier` (Hearing) | `lite`, `standard` (default), `plus` | `plus` for names, spelled-out codes and other languages; `lite` is cheapest. |
+| `endpointing` (Reply speed) | `faster`, `fast`, `normal` (default), `patient` | `patient` for callers who read out numbers or addresses. |
 <!-- /rate -->
 
 2. **Resolve real options.** Call `GET /v1/voices` and use its returned voice ID.

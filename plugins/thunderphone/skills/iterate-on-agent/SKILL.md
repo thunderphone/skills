@@ -167,9 +167,9 @@ skill in the meantime.
      endpointing or intelligence tier, run `compare_configs` with the current configuration as
      the first entry. Comparisons run on dev only; measure the one you pick
      on the test split in step 7. Check the configuration before blaming the prompt:
-     misheard spelled letters point at the audio tier (or Storm), a slow
+     misheard spelled letters point at the audio tier, a slow
      first reply (or one that cuts the caller off) at the endpointing tier,
-     a reply that misses an instruction on an Express or Lite agent at the
+     a reply that misses an instruction on a Core agent at the
      intelligence tier, and a caller left in silence at
      the feedback mode.
    - Repeat steps 4 to 6 until the dev split holds.
